@@ -1,0 +1,69 @@
+/* Fuente de 8-bits */
+/* .press-start-2p-regular {
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+/* Diseño del body */
+body{
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    font-size: 18px;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+body, h1, h2, h3, p, ul, li{
+    margin: 10px;
+    padding: 0;
+    list-style: none;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Diseño del header */
+header{
+    background: #005A9C;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1{
+    font-size: 50px;
+    margin: 0 0 10px;
+    font-family: 'Press Start 2P', system-ui;
+    font-style: oblique;
+}
+
+header p{
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Diseño de nav */
+nav ul{
+    background: #333;
+    text-align: center;
+    padding: 10px 0;
+}
+
+nav ul li{
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Diseño de section */
+section{
+    padding: 20px;
+    margin: 20px 0;
+}
+
+
