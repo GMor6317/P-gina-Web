@@ -14,6 +14,8 @@ header {
     padding: 10px 20px;
     color: white;
     font-size: 10px;
+    display: flex;
+    justify-content: space-between;
     /* font-style: italic; */
 
 }
@@ -78,7 +80,6 @@ footer a {
     text-decoration: none;
     transition: color 0.3, transform 0.2;
     display: flex;
-    align-items: center;
 }
 
 .btn_home:hover{
@@ -222,4 +223,60 @@ footer a {
     width: 80%;
     max-width: 600px;
     margin: 20px auto;
+}
+
+
+
+/*--------------------------- PRUEBA MENU HAMBURGUESA ----------------------------------*/
+.nav-list{
+    display: flex;
+    list-style-type: none;
+    gap: 1rem;
+}
+
+.nav-list li a{
+    text-decoration: none;
+    color: white;
+}
+
+.abrir-menu{
+    display:none;
+}
+
+@media screen and (max-width: 1000px){
+    .abrir-menu, .cerrar-menu{
+        display: block;
+    }
+
+
+    .nav{
+        opacity: 0;
+        visibility: hidden;
+
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 1rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: pink;
+        padding: 2rem;
+        box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .5);
+    }
+
+    .nav.visible{
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-list{
+        flex-direction: column;
+        align-items: end;
+    }
+
+    .nav-list li a{
+        color:rgba(73, 35, 73, 0.5)
+    }
 }
