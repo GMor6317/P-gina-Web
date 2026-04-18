@@ -11,12 +11,14 @@ body {
 header {
     font-family: "Press Start 2P", system-ui;
     background-color: rgb(73, 35, 73);
-    padding: 10px 20px;
+    padding: 20px 20px;
     color: white;
     font-size: 10px;
     display: flex;
     justify-content: space-between;
     /* font-style: italic; */
+    position: fixed;
+    width: 100%;
 
 }
 
@@ -69,7 +71,7 @@ footer {
     text-align: center;
 }
 
-footer a {
+footer a, p {
     color: white;
     text-decoration: underline;
 }
@@ -80,6 +82,8 @@ footer a {
     text-decoration: none;
     transition: color 0.3, transform 0.2;
     display: flex;
+    padding-right: 50px;
+    
 }
 
 .btn_home:hover{
@@ -174,6 +178,7 @@ footer a {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 
@@ -279,4 +284,124 @@ footer a {
     .nav-list li a{
         color:rgba(73, 35, 73, 0.5)
     }
+}
+
+/*-------------------------- Gráficas --------------------------*/
+.Graficas{
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;    
+    background-color: #f0f0f0;
+    padding: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.Grafica1, .Grafica2, .Grafica3{
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    width: 60vw;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,1);
+}
+
+canvas{
+    width: 100% !important;
+    height: auto !important;
+}
+
+/*-------------------------- Ranking --------------------------*/
+#contenedor-ranking{
+    /* margin-top: 20px auto; */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: rgb(104, 53, 109);
+    padding: 30px;
+    align-items: center;
+    margin: 40px;
+    width: 80%;
+    border-radius: 15px;
+    margin-top: 150px;
+}
+
+#contenedor-ranking h1{
+    color: white;
+    font-family: 'Press Start 2P';
+    font-size: 50px;
+}
+
+.ranking-list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #2c0052;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.ranking-item{
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    height: 70px;
+    width: 100%;
+    transition: transform 0.2s;
+}
+
+.ranking-item:hover{
+    transform: scale(1.02);
+    background-color: rgba(255, 255, 255, 0.2);
+    border: aqua;
+}
+
+.posicion{
+    width: 70px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #8bd5f7;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.avatar{
+    padding-left: 20px;
+    font-size: 1.8rem;
+}
+
+.nombre{
+    flex-grow: 1;
+    padding-left: 20px;
+    font-size: 0.9rem;
+}
+
+.puntuacion{
+    padding-right: 40px;
+    font-size: 1.2rem;
+    text-align: right;
+}
+
+.trofeo{
+    padding-right: 30px;
+    font-size: 40px;
 }
