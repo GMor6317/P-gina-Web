@@ -1,11 +1,10 @@
-const nav = document.getElementById('nav');
-const abrir = document.getElementById('abrir');
-const cerrar = document.getElementById('cerrar');
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBoton = document.getElementById('menuBtn');
+    const navbar = document.querySelector('.navbar');
 
-abrir.addEventListener('click', () =>{
-    nav.classList.add('visible');
-})
 
-cerrar.addEventListener('click', () =>{
-    nav.classList.remove('visible');
-})
+    menuBoton.addEventListener('click', () => {
+        menuBoton.classList.toggle('open');
+        navbar.classList.toggle('active');
+    });
+});

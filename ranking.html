@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +10,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="/javascript/prueba.js"></script>
 </head>
+
 <body>
     <header>
         <div class="header-container">
-        <h1>Ranking General</h1>
-        <!-- Botón temporal mientras se implementa menu hamburguesa -->
-         <a href="index.html" class="btn_home"><i class="fa-solid fa-home"></i></a>
-         </div>
+            <h1>Ranking General</h1>
+
+            <div class="menu-btn" id="menuBtn">
+                <div class="menu-btn__burger"></div>
+            </div>
+
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="estadisticasGenerales.html">Estadísticas Generales</a></li>
+                    <li><a href="estadisticasParticulares.html">Estadísticas Particulares</a></li>
+                    <li><a href="index.html">Cerrar Sesión</a></li>
+
+                </ul>
+            </nav>
+        </div>
+        </div>
     </header>
     <main>
         <div id="contenedor-ranking">
@@ -57,7 +72,7 @@
                     <div class="puntuacion">1,400</div>
                     <div class="trofeo">&#x1F3C6;</div>
                 </li>
-                
+
             </ol>
         </div>
     </main>
@@ -65,6 +80,7 @@
     <footer>
         <p>© Star-Maths 2026. All rights reserved.</p>
     </footer>
-    
+
 </body>
+
 </html>

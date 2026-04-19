@@ -12,44 +12,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/javascript/prueba.js"></script>
 </head>
 
 <body>
 
     <header>
         <div class="header-container">
-        <h1>Estadísticas Particulares</h1>
-        <!-- Botón temporal mientras se implementa menu hamburguesa -->
-         <a href="index.html" class="btn_home"><i class="fa-solid fa-home"></i></a>
-        <!--Menu de hamburgesa-->
-        <!-- <div class="menu-btn" id="menuBtn">
-            <div class="menu-btn__burger"></div>
-        </div>
+            <h1>Estadísticas Particulares</h1>
+            <!--Menu de hamburgesa-->
+            <div class="menu-btn" id="menuBtn">
+                <div class="menu-btn__burger"></div>
+            </div>
 
-        <nav class="navbar" id="navbar">
-            <ul>
-                <li><a href="#">Estadísticas Generales</a></li>
-                <li><a href="#">Estadisticas Particulares</a></li>
-                <li><a href="#">Ranking General</a></li>
-            </ul>
-        </nav> -->
-        </div>
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="estadisticasGenerales.html">Estadísticas Generales</a></li>
+                    <li><a href="ranking.html">Ranking General</a></li>
+                    <li><a href="index.html">Cerrar Sesión</a></li>
 
+                </ul>
+            </nav>
+        </div>
     </header>
     <main>
         <div class="Graficas">
-                <div class="Grafica1">
-                    <h2>Gráfica 1</h2>
-                    <canvas id="miGrafica"></canvas>
-                </div>
-                <div class="Grafica2">
-                    <h2>Gráfica 2</h2>
-                    <canvas id="miGrafica2"></canvas>
-                </div>
-                <div class="Grafica3">
-                    <h2>Gráfica 3</h2>
-                    <canvas id="miGrafica3"></canvas>
-                </div>
+            <div class="Grafica">
+                <h2>Gráfica 1</h2>
+                <canvas id="miGrafica"></canvas>
+            </div>
+            <div class="Grafica">
+                <h2>Gráfica 2</h2>
+                <canvas id="miGrafica2"></canvas>
+            </div>
+            <div class="Grafica">
+                <h2>Gráfica 3</h2>
+                <canvas id="miGrafica3"></canvas>
+            </div>
         </div>
         <script src="/javascript/graficas.js"></script>
     </main>

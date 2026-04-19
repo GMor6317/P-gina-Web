@@ -1,3 +1,4 @@
+
 body {
     background-color: rgb(23, 11, 31);
     margin: 0;
@@ -8,42 +9,119 @@ body {
     min-height: 100vh;
 }
 
-header {
-    font-family: "Press Start 2P", system-ui;
-    background-color: rgb(73, 35, 73);
-    padding: 20px 20px;
-    color: white;
-    font-size: 10px;
-    display: flex;
-    justify-content: space-between;
-    /* font-style: italic; */
-    position: fixed;
-    width: 100%;
-
-}
-
 main {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
+    padding-top: 80px; /* Evita que el contenido quede oculto bajo el header */
 }
 
-
-footer a:link {
-    color: solid white;
-}
-
-footer a:visited {
-    color:pink;
-}
-
-footer a:hover{
+/* ------------header------------- */
+header {
+    font-family: "Press Start 2P", system-ui;
+    background-color: rgb(73, 35, 73);
+    padding: 20px;
     color: white;
-    background-color: pink;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.btn_home {
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.2s;
+    display: flex;
+    padding-right: 50px;
+}
+
+.btn_home:hover {
+    color: pink;
+}
+
+/* Botón de Menú (Hamburguesa) */
+.menu-btn {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.menu-btn__burger,
+.menu-btn__burger::before,
+.menu-btn__burger::after {
+    width: 30px;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.menu-btn__burger::before,
+.menu-btn__burger::after {
+    content: '';
+    position: absolute;
+}
+
+.menu-btn__burger::before { transform: translateY(-10px); }
+.menu-btn__burger::after { transform: translateY(10px); }
+
+
+/*------------------- Barra de Navegación Lateral--------------------- */
+.navbar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: rgb(40, 20, 50);
+    transition: right 0.4s ease;
+    padding-top: 80px;
+    z-index: 90;
+}
+
+.navbar.active {
+    right: 0;
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navbar li {
+    padding: 20px;
+    text-align: center;
+    font-family: "Press Start 2P", system-ui;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+}
+
+/*---------------botones------------------*/
 .boton_jugar {
     color: white;
     background-color: rgb(73, 35, 73);
@@ -55,292 +133,114 @@ footer a:hover{
     font-size: 2.5rem;
     cursor: pointer;
     border-radius: 20px;
+    transition: transform 0.3s ease-in-out, background-color 0.3s;
 }
 
 .boton_jugar:hover {
-    scale: 1.1 1.1;
-    transition: ease-in-out;
-    transition-duration: 0.3s;
+    transform: scale(1.1);
     background-color: rgb(100, 50, 100);
 }
 
-
-footer {
-    background-color: rgb(73, 35, 73);
-    padding: 1rem;
-    text-align: center;
-}
-
-footer a, p {
-    color: white;
-    text-decoration: underline;
-}
-
-.btn_home{
-    color: white;
-    font-size: 1.5rem;
-    text-decoration: none;
-    transition: color 0.3, transform 0.2;
-    display: flex;
-    padding-right: 50px;
-    
-}
-
-.btn_home:hover{
-    color: pink;
-}
-
-/* Estilos del Botón */
-.menu-btn {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    z-index: 100;
-    /* Asegura que esté por encima del menú */
-}
-
-.menu-btn__burger {
-    width: 30px;
-    height: 3px;
-    background: #333;
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-}
-
-.menu-btn__burger::before,
-.menu-btn__burger::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 3px;
-    background: #333;
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-}
-
-.menu-btn__burger::before {
-    transform: translateY(-10px);
-}
-
-.menu-btn__burger::after {
-    transform: translateY(10px);
-}
-
-.menu-btn.open .menu-btn__burger {
-    transform: translateX(-50px);
-    background: transparent;
-}
-
-.menu-btn.open .menu-btn__burger::before {
-    transform: rotate(45deg) translate(35px, -35px);
-}
-
-.menu-btn.open .menu-btn__burger::after {
-    transform: rotate(-45deg) translate(35px, 35px);
-}
-
-.navbar {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 250px;
-    height: 100vh;
-    background: #f4f4f4;
-    transition: right 0.4s ease;
-    padding-top: 80px;
-}
-
-.navbar.active {
-    right: 0;
-}
-
-.navbar ul {
-    list-style: none;
-}
-
-.navbar li {
-    padding: 20px;
-    text-align: center;
-    font-family: "Press Start 2P", system-ui;
-}
-
-.navbar a {
-    text-decoration: none;
-    color: #333;
-    font-size: 1.2rem;
-}
-
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-
-.menu-btn__burger,
-.menu-btn__burger::before,
-.menu-btn__burger::after {
-    background: white;
-}
-
-.navbar {
-    z-index: 90;
-    background-color: rgb(40, 20, 50);
-}
-
-.navbar a {
-    color: white;
-}
-
 .validar-credenciales {
-    font-family: "Arial";
+    font-family: "Arial", sans-serif;
     background-color: rgb(96, 40, 96);
     width: 500px;
-    height: 200px;
     padding: 20px;
     border-radius: 10px;
     color: white;
-    /* font-family: "Press Start 2P", cursive; */
     text-align: center;
+     border: 4px solid #00d4ff;
+    box-shadow: 0 0 15px #00d4ff, 
+                0 0 30px #00d4ff, 
+                inset 0 0 15px #00d4ff;
 }
 
-#usernameLabel{
-    padding-left: 28px;
-}
+.contenedoresLabel { width: 150px; }
+#usernameLabel { padding-left: 28px; }
+#iniciar-sesion { height: 20px; }
 
-.contenedoresLabel{
-    width:150px;
-}
-
-#iniciar-sesion{
-    height: 20px;
-}
-
-.myChart{
-    background-color: rgba(73, 35, 73, 0.5);
-    padding: 20px;
-    border-radius: 15px;
-    width: 80%;
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-
-
-/*--------------------------- PRUEBA MENU HAMBURGUESA ----------------------------------*/
-.nav-list{
-    display: flex;
-    list-style-type: none;
-    gap: 1rem;
-}
-
-.nav-list li a{
-    text-decoration: none;
-    color: white;
-}
-
-.abrir-menu{
-    display:none;
-}
-
-@media screen and (max-width: 1000px){
-    .abrir-menu, .cerrar-menu{
-        display: block;
-    }
-
-
-    .nav{
-        opacity: 0;
-        visibility: hidden;
-
-        display: flex;
-        flex-direction: column;
-        align-items: end;
-        gap: 1rem;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background-color: pink;
-        padding: 2rem;
-        box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .5);
-    }
-
-    .nav.visible{
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .nav-list{
-        flex-direction: column;
-        align-items: end;
-    }
-
-    .nav-list li a{
-        color:rgba(73, 35, 73, 0.5)
-    }
-}
-
-/*-------------------------- Gráficas --------------------------*/
-.Graficas{
-    margin-top: 120px;
+/*-----------------graficas------------------*/
+.Graficas {
+    margin: 120px auto 20px auto; /* Centramos el contenedor */
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     gap: 40px;    
-    background-color: #f0f0f0;
-    padding: 20px;
+    background-color: rgb(104, 53, 109);
+    padding: 50px;
     align-items: center;
+    max-width: 1100px;
     margin-bottom: 20px;
+    border-radius: 20px;
+    
+    border: 4px solid #00d4ff;
+    box-shadow: 0 0 15px #00d4ff, 
+                0 0 30px #00d4ff, 
+                inset 0 0 15px #00d4ff;
 }
 
-.Grafica1, .Grafica2, .Grafica3{
+.Grafica h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2rem;
+    color: rgb(73, 35, 73); 
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px dashed #00d4ff;
+    text-transform: uppercase;
+}
+
+.Grafica{
     background-color: white;
     border: 2px solid #ccc;
     border-radius: 8px;
     padding: 20px;
-    margin-bottom: 20px;
-
     width: 60vw;
     max-width: 500px;
-
     display: flex;
     flex-direction: column;
-    align-content: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
-canvas{
+.myChart {
+    background-color: rgba(73, 35, 73, 0.5);
+    padding: 20px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+canvas {
     width: 100% !important;
     height: auto !important;
 }
 
-/*-------------------------- Ranking --------------------------*/
-#contenedor-ranking{
-    /* margin-top: 20px auto; */
+/*------------Ranking------------------*/
+#contenedor-ranking {
     display: flex;
     flex-direction: column;
     gap: 20px;
     background-color: rgb(104, 53, 109);
     padding: 30px;
     align-items: center;
-    margin: 40px;
+    margin: 150px 40px 40px 40px;
     width: 80%;
     border-radius: 15px;
-    margin-top: 150px;
+     border: 4px solid #00d4ff;
+    box-shadow: 0 0 15px #00d4ff, 
+                0 0 30px #00d4ff, 
+                inset 0 0 15px #00d4ff;
 }
 
-#contenedor-ranking h1{
+#contenedor-ranking h1 {
     color: white;
-    font-family: 'Press Start 2P';
+    font-family: 'Press Start 2P', cursive;
     font-size: 50px;
 }
 
-.ranking-list{
+.ranking-list {
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -353,7 +253,7 @@ canvas{
     box-sizing: border-box;
 }
 
-.ranking-item{
+.ranking-item {
     display: flex;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.1);
@@ -363,16 +263,15 @@ canvas{
     font-family: 'Press Start 2P', cursive;
     height: 70px;
     width: 100%;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.2s;
 }
 
-.ranking-item:hover{
+.ranking-item:hover {
     transform: scale(1.02);
     background-color: rgba(255, 255, 255, 0.2);
-    border: aqua;
 }
 
-.posicion{
+.posicion {
     width: 70px;
     height: 100%;
     display: flex;
@@ -384,24 +283,28 @@ canvas{
     font-size: 1.2rem;
 }
 
-.avatar{
-    padding-left: 20px;
-    font-size: 1.8rem;
+.avatar { padding-left: 20px; font-size: 1.8rem; }
+.nombre { flex-grow: 1; padding-left: 20px; font-size: 0.9rem; }
+.puntuacion { padding-right: 40px; font-size: 1.2rem; text-align: right; }
+.trofeo { padding-right: 30px; font-size: 40px; }
+
+/*---------------Footer------------------*/
+footer {
+    background-color: rgb(73, 35, 73);
+    padding: 1rem;
+    text-align: center;
 }
 
-.nombre{
-    flex-grow: 1;
-    padding-left: 20px;
-    font-size: 0.9rem;
+footer a, footer p {
+    color: white;
+    text-decoration: underline;
 }
 
-.puntuacion{
-    padding-right: 40px;
-    font-size: 1.2rem;
-    text-align: right;
+footer a:visited {
+    color: pink;
 }
 
-.trofeo{
-    padding-right: 30px;
-    font-size: 40px;
+footer a:hover {
+    color: white;
+    background-color: pink;
 }
