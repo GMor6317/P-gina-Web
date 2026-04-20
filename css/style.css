@@ -179,6 +179,18 @@ header {
                 0 0 30px #00d4ff, 
                 inset 0 0 15px #00d4ff;
 }
+.buscador {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.buscador input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 400px;
+    font-size: 1rem;
+}
 
 .Grafica h2 {
     font-family: 'Press Start 2P', cursive;
