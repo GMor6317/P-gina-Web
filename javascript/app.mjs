@@ -213,7 +213,33 @@ app.get('/ranking/:id', async (req, res) => {
 });
 
 //-------------------------- NUEVO -----------------------
-app.get('/victorias/:id', async (req, res) => {
+//Victorias por Mundo
+app.get('/victorias/mundo/:mundoId', async (req, res) => {
+    let connection;
+
+    try{
+        connection = await db.connect();
+
+        const mundoId = req.params.mundoId;
+
+        const result = await db.victoriasPorMundo(connection, mundoId);
+
+        res.json(result);
+    }
+    catch{
+        res.status(500).json({
+            exito: false,
+            aviso: err.message
+        });
+    }
+    finally{
+        if(connection) await connection.end();
+    }
+});
+
+/*  ESTA ES PARTICULAR  */
+//Victorias por Nivel
+app.get('/victorias/usuario/:id', async (req, res) => {
     let connection;
 
     try{
@@ -237,7 +263,8 @@ app.get('/victorias/:id', async (req, res) => {
 });
 
 
-app.get('/puntuacion/promedio', async (res) =>{
+//Promedio Puntos General
+app.get('/puntuacion/promedio', async (req,res) =>{
     let connection;
 
     try{
@@ -258,7 +285,7 @@ app.get('/puntuacion/promedio', async (res) =>{
     }
 });
 
-
+//Puntuacion Promedio Por Nivel
 app.get('/puntuacion/promedio/:id', async (req, res) => {
     let connection;
 
@@ -283,6 +310,7 @@ app.get('/puntuacion/promedio/:id', async (req, res) => {
 });
 
 
+//Puntuacion Promedio Por Mundo
 app.get('/puntuacion/promedio/mundo/:mundoId', async (req, res) =>{
     let connection;
 
@@ -294,6 +322,29 @@ app.get('/puntuacion/promedio/mundo/:mundoId', async (req, res) =>{
         const result = await db.puntuacionPromedioPorMundo(connection, mundoId);
 
         res,json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            exito: false,
+            aviso: err.message
+        });
+    }
+    finally{
+        if(connection) await connection.end();
+    }
+});
+
+
+//Duracion Promedio por Mundo
+app.get('/duracion/promedio/mundos', async (req, res) => {
+    let connection;
+
+    try{
+        connection = await db.connect();
+
+        const result = await db.duracionPromedioPorMundo(connection);
+
+        res.json(result);
     }
     catch(err){
         res.status(500).json({

@@ -74,6 +74,7 @@ const miGrafica3 = new Chart(g3, {
 
 
 //------------------------- NUEVO ------------------------------------
+//Victorias por Nivel
 function crearGraficaVictorias(dataVictory){
     const niveles = dataVictory.map(d => "Nivel " + d.num_nivel);
     const victorias = dataVictory.map(d => d.victorias);
@@ -90,23 +91,24 @@ function crearGraficaVictorias(dataVictory){
     });
 }
 
-
+//Promedio Puntos General
 function crearGraficaPromedioGeneral(dataAVGGeneral){
-    const mundos = [new Set(dataAVGGeneral.map(item => item.mundo))];
-    const niveles = [new Set(dataAVGGeneral.map(item => item.num_nivel))];
+    const mundos = [...new Set(dataAVGGeneral.map(item => item.mundo))];
+    const niveles = [...new Set(dataAVGGeneral.map(item => item.num_nivel))];
 
     const datasets = mundos.map(mundo =>{
         return {
             label: mundo,
             data: niveles.map(nivel =>{
-                const registro = data.find(d => d.mundo === mundo && d.num_nivel === nivel);
-                return registro ? registro.PromedioPuntaje : null;
+                const registro = dataAVGGeneral.find(d => d.mundo === mundo && d.num_nivel === nivel);
+                return registro ? registro.PromedioPuntaje : 0;
             }),
-            backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.6)`
+            backgroundColor : `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.6)`
         };
     });
 
-    new Chart(document.getElementById('GraficaAVGGeneral').getContext('2d'), {
+    const ctx = document.getElementById('graficaAVGGeneral').getContext('2d');
+    new Chart(ctx, {
         type: 'bar',
         data: {
             labels: niveles.map(n => `Nivel ${n}`),
@@ -115,13 +117,16 @@ function crearGraficaPromedioGeneral(dataAVGGeneral){
         options: {
             responsive: true,
             scales: {
-                y: {beginAtZero: true}
+                y: {beginAtZero: true,
+                    title: { display: true, text: 'Promedio de Aciertos' }
+                }
             }
         }
     });
 }
 
 
+//Puntuacion Promedio Por Mundo
 function crearGraficaPromedioMundoGeneral(dataAVGMundo){
     const niveles = data.map(item => `Nivel ${item.num_nivel}`);
     const promedios = data.map(item => item.PromedioPuntaje);
@@ -147,6 +152,7 @@ function crearGraficaPromedioMundoGeneral(dataAVGMundo){
     });
 }
 
+//Puntuacion Promedio Por Nivel
 function crearGraficaPromedioNivelGeneral(dataAVGNivel){
     const promedio = dataAVGNivel[0].PromedioPuntaje;
 
@@ -168,3 +174,45 @@ function crearGraficaPromedioNivelGeneral(dataAVGNivel){
     });
 }
 
+
+//Duracion Promedio por Mundo
+function crearGraficaPromedioDuracionMundos(dataDuracionMundos){
+    const mundos = Array.from(new Set(dataDuracionMundos.map(item => item.mundo)));
+    const niveles = Array.from(new Set(dataDuracionMundos.map(item => item.num_nivel)));
+
+    const datasets = mundos.map(mundo =>{
+        return {
+            label: `Mundo ${mundo}`,
+            data: niveles.map(nivel =>{
+                const registro = dataDuracionMundos.find(d => d.mundo === mundo && d.num_nivel === nivel);
+                return registro ? registro.DuracionPromedio : null;
+            }),
+            backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.6)`
+        };
+    });
+
+    new Chart(document.getElementById('graficaDuracionMundos').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: niveles.map(n => `Nivel ${n}`),
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Duracion Promedio'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Niveles'
+                    }
+                }
+            }
+        }
+    });
+}
