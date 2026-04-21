@@ -1,3 +1,5 @@
+
+
 const g1 = document.getElementById('miGrafica').getContext('2d');
 const g2 = document.getElementById('miGrafica2').getContext('2d');
 const g3 = document.getElementById('miGrafica3').getContext('2d');
@@ -68,3 +70,101 @@ const miGrafica3 = new Chart(g3, {
         }]
     }
 });
+
+
+
+//------------------------- NUEVO ------------------------------------
+function crearGraficaVictorias(dataVictory){
+    const niveles = dataVictory.map(d => "Nivel " + d.num_nivel);
+    const victorias = dataVictory.map(d => d.victorias);
+    
+    new Chart(document.getElementById('graficaVictorias').getContext('2d'), {
+        type: "bar",
+        data:{
+            labels: niveles,
+            datasets: [{
+                label: "Victorias",
+                data: victorias
+            }]
+        }
+    });
+}
+
+
+function crearGraficaPromedioGeneral(dataAVGGeneral){
+    const mundos = [new Set(dataAVGGeneral.map(item => item.mundo))];
+    const niveles = [new Set(dataAVGGeneral.map(item => item.num_nivel))];
+
+    const datasets = mundos.map(mundo =>{
+        return {
+            label: mundo,
+            data: niveles.map(nivel =>{
+                const registro = data.find(d => d.mundo === mundo && d.num_nivel === nivel);
+                return registro ? registro.PromedioPuntaje : null;
+            }),
+            backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.6)`
+        };
+    });
+
+    new Chart(document.getElementById('GraficaAVGGeneral').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: niveles.map(n => `Nivel ${n}`),
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {beginAtZero: true}
+            }
+        }
+    });
+}
+
+
+function crearGraficaPromedioMundoGeneral(dataAVGMundo){
+    const niveles = data.map(item => `Nivel ${item.num_nivel}`);
+    const promedios = data.map(item => item.PromedioPuntaje);
+
+    new Chart(document.getElementById('graficaAVGMundo').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: niveles,
+            datasets: [{
+                label: 'Promedio de puntaje',
+                data: promedios,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {beginAtZero: true}
+            }
+        }
+    });
+}
+
+function crearGraficaPromedioNivelGeneral(dataAVGNivel){
+    const promedio = dataAVGNivel[0].PromedioPuntaje;
+
+    new Chart(document.getElementById('graficaAVGNivel').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Nivel'],
+            datasets: [{
+                label: 'Promedio de puntaje',
+                data: [promedio],
+                backgroundColor: 'rgba(54, 162, 235, 0.6'
+            }]
+        },
+        options: {
+            scales: {
+                y: {beginAtZero: true}
+            }
+        }
+    });
+}
+
