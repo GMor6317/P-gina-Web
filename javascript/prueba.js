@@ -48,7 +48,7 @@ async function PromedioPuntajeNivel(nivelId){
 //Puntuacion Promedio Por Mundo
 async function PromedioPuntajePorMundo(mundoId){
     const response = await fetch(
-        `${ API_URL }/puntuaciones/promedio/mundo/${mundoId}`
+        `${ API_URL }/puntuacion/promedio/mundo/${mundoId}`
     );
     const dataAVGMundo = await response.json();
 

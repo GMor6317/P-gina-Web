@@ -267,6 +267,7 @@ export default {
   registro, 
   puntaje, 
   ranking,
+  victoriasPorMundo,
   victoriasPorNivel,
   puntuacionPromedioGeneral,
   puntuacionPromedioPorMundo,

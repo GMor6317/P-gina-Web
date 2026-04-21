@@ -226,7 +226,7 @@ app.get('/victorias/mundo/:mundoId', async (req, res) => {
 
         res.json(result);
     }
-    catch{
+    catch(err){
         res.status(500).json({
             exito: false,
             aviso: err.message
