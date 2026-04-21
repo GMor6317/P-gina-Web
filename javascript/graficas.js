@@ -128,8 +128,8 @@ function crearGraficaPromedioGeneral(dataAVGGeneral){
 
 //Puntuacion Promedio Por Mundo
 function crearGraficaPromedioMundoGeneral(dataAVGMundo){
-    const niveles = data.map(item => `Nivel ${item.num_nivel}`);
-    const promedios = data.map(item => item.PromedioPuntaje);
+    const niveles = dataAVGMundo.map(item => `Nivel ${item.num_nivel}`);
+    const promedios = dataAVGMundo.map(item => item.PromedioPuntaje);
 
     new Chart(document.getElementById('graficaAVGMundo').getContext('2d'), {
         type: 'line',

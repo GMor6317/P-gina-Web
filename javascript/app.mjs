@@ -321,7 +321,7 @@ app.get('/puntuacion/promedio/mundo/:mundoId', async (req, res) =>{
 
         const result = await db.puntuacionPromedioPorMundo(connection, mundoId);
 
-        res,json(result);
+        res.json(result);
     }
     catch(err){
         res.status(500).json({
