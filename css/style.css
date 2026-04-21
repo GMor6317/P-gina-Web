@@ -191,6 +191,13 @@ header {
     width: 400px;
     font-size: 1rem;
 }
+.buscador input:focus {
+    background-color: rgb(104, 53, 109);
+    color: white;
+}
+.buscador input:focus::placeholder {
+    color: white;
+}
 
 .Grafica h2 {
     font-family: 'Press Start 2P', cursive;
