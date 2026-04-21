@@ -11,19 +11,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    const idJugador = localStorage.getItem('id_jugador') || 1;
-    cargarVictorias(idJugador);
+    // const idJugador = localStorage.getItem('id_jugador') || 1;
+    // cargarVictorias(idJugador);
 
-    PromedioPuntajeGeneral();
+    // PromedioPuntajeGeneral();
 
-    const idNivel = localStorage.getItem('id_nivel') || 1;
-    PromedioPuntajeNivel(idNivel);
+    // const idNivel = localStorage.getItem('id_nivel') || 1;
+    // PromedioPuntajeNivel(idNivel);
 
-    const idMundo = localStorage.getItem('id_mundo') || 1;
-    PromedioPuntajePorMundo(idMundo);
+    // const idMundo = localStorage.getItem('id_mundo') || 1;
+    // PromedioPuntajePorMundo(idMundo);
 
-    duracionPromedioPorMundo();
+    // duracionPromedioPorMundo();
+    const inicializarDashboard = async () => {
+        try {
+            const idJugador = localStorage.getItem('id_jugador') || 1;
+            await cargarVictorias(idJugador);
+        } catch (e) { console.error("Error en victorias:", e); }
+
+        try {
+            await PromedioPuntajeGeneral();
+        } catch (e) { console.error("Error en promedio general:", e); }
+
+        try {
+            const idNivel = localStorage.getItem('id_nivel') || 1;
+            await PromedioPuntajeNivel(idNivel);
+        } catch (e) { console.error("Error en promedio nivel:", e); }
+
+        try {
+            const idMundo = localStorage.getItem('id_mundo') || 1;
+            await PromedioPuntajePorMundo(idMundo);
+        } catch (e) { console.error("Error en promedio mundo:", e); }
+
+        try {
+            await duracionPromedioPorMundo();
+        } catch (e) { console.error("Error en duración:", e); }
+    };
+
+    inicializarDashboard();
 });
+
 
 //--------------------------- NUEVO ----------------------------------
 //Victorias por Nivel
