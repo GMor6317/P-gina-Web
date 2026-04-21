@@ -9,6 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
         menuBoton.classList.toggle('open');
         navbar.classList.toggle('active');
     });
+
+
+    const idJugador = localStorage.getItem('id_jugador') || 1;
+    cargarVictorias(idJugador);
+
+    PromedioPuntajeGeneral();
+
+    const idNivel = localStorage.getItem('id_nivel') || 1;
+    PromedioPuntajeNivel(idNivel);
+
+    const idMundo = localStorage.getItem('id_mundo') || 1;
+    PromedioPuntajePorMundo(idMundo);
+
+    duracionPromedioPorMundo();
 });
 
 //--------------------------- NUEVO ----------------------------------

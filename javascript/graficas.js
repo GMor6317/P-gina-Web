@@ -1,4 +1,5 @@
 
+// import ;
 
 const g1 = document.getElementById('miGrafica').getContext('2d');
 const g2 = document.getElementById('miGrafica2').getContext('2d');
