@@ -5,16 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estadísticas Particulares</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <script type="module" src="/javascript/prueba.js"></script>
-    <script type="module" src="./javascript/graficas.js"></script>
 </head>
 
 <body>
@@ -57,9 +54,23 @@
                 <h2>Gráfica 3</h2>
                 <canvas id="miGrafica3"></canvas>
             </div>
+            <!-- Nuevas Gráficas -->
+             <div class="Grafica">
+                <h2>Victorias Jugador</h2>
+                <canvas id="graficaVictorias"></canvas>
+            </div>
+            <div class="Grafica">
+                <h2>Duración vs Precisión</h2>
+                <canvas id="graficaDuracionVSPrecision"></canvas>
+            </div>
+            <div class="Grafica">
+                <h2>Habilidad Jugador</h2>
+                <canvas id="graficaHabilidadJugador"></canvas>
+            </div>
         </div>
-        <script src="/javascript/graficas.js"></script>
     </main>
+    <script type="module" src="./javascript/prueba.mjs"></script>
+    <script type="module" src="./javascript/graficas.mjs"></script>
 </body>
 
 </html>

@@ -237,31 +237,6 @@ app.get('/victorias/mundo/:mundoId', async (req, res) => {
     }
 });
 
-/*  ESTA ES PARTICULAR  */
-//Victorias por Nivel
-app.get('/victorias/usuario/:id', async (req, res) => {
-    let connection;
-
-    try{
-        connection = await db.connect();
-
-        const userId = req.params.id;
-
-        const result = await db.victoriasPorNivel(connection, userId);
-
-        res.json(result);
-    }
-    catch(err){
-        res.status(500).json({
-            exito: false,
-            aviso: err.message
-        });
-    }
-    finally{
-        if(connection) await connection.end();
-    }
-});
-
 
 //Promedio Puntos General
 app.get('/puntuacion/promedio', async (req,res) =>{
@@ -343,6 +318,129 @@ app.get('/duracion/promedio/mundos', async (req, res) => {
         connection = await db.connect();
 
         const result = await db.duracionPromedioPorMundo(connection);
+
+        res.json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            exito: false,
+            aviso: err.message
+        });
+    }
+    finally{
+        if(connection) await connection.end();
+    }
+});
+
+
+//----------------- GRAFICAS ACTUALIZADAS ------------------------
+//Dificultad por mundo
+app.get('/dificultad/mundo', async (req, res) => {
+    let connection;
+
+    try{
+        connection = await db.connect();
+
+        const result = await db.dificultadPorMundo(connection);
+
+        res.json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            exito: false,
+            aviso: err.message
+        });
+    }
+    finally{
+        if(connection) await connection.end();
+    }
+});
+
+
+//Jugadores Únicos Por Nivel
+app.get('/jugadores/nivel', async (req, res) => {
+    let connection;
+
+    try{
+        connection = await db.connect();
+
+        const result = await db.jugadoresUnicosPorNivel(connection);
+
+        res.json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            exito: false,
+            aviso: err.message
+        });
+    }
+    finally{
+        if(connection) await connection.end();
+    }
+});
+
+
+//-----------------Graficas individuales-----------------------------
+//Victorias por Nivel
+app.get('/victorias/usuario/:id', async (req, res) => {
+    let connection;
+
+    try{
+        connection = await db.connect();
+
+        const userId = req.params.id;
+
+        const result = await db.victoriasPorNivel(connection, userId);
+
+        res.json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            exito: false,
+            aviso: err.message
+        });
+    }
+    finally{
+        if(connection) await connection.end();
+    }
+});
+
+
+//Duración vs precisión
+app.get('/duracion/precision/:idJugador', async (req, res) => {
+    let connection;
+
+    try{
+        connection = await db.connect();
+
+        const idJugador = req.params.idJugador;
+
+        const result = await db.precisionVSDuracion(connection, idJugador);
+
+        res.json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            exito: false,
+            aviso: err.message
+        });
+    }
+    finally{
+        if(connection) await connection.end();
+    }
+});
+
+
+//Habilidad
+app.get('/habilidad/jugador/:idJugador', async (req, res) => {
+    let connection;
+
+    try{
+        connection = await db.connect();
+
+        const idJugador = req.params.idJugador;
+
+        const result = await db.habilidadJugador(connection, idJugador);
 
         res.json(result);
     }

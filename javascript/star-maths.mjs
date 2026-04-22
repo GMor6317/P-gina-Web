@@ -196,21 +196,6 @@ async function victoriasPorMundo(connection, mundoId){
 }
 
 
-//Victorias por Nivel
-async function victoriasPorNivel(connection, userId){
-    const [rows] = await connection.execute(`
-        SELECT n.num_nivel, COUNT(*) AS victorias
-        FROM Partida p
-        JOIN Nivel n ON p.id_nivel = n.id_nivel
-        WHERE p.id_jugador = ?
-        AND p.victoria = 1
-        GROUP BY n.num_nivel
-        ORDER BY n.num_nivel;            
-    `, [userId]);
-    return rows;
-}
-
-
 //Promedio Puntos General
 async function puntuacionPromedioGeneral(connection){
     const [rows] = await connection.execute(`
@@ -261,6 +246,75 @@ async function duracionPromedioPorMundo(connection){
     return rows;
 }
 
+//----------------------- GRAFICAS ACTUALIZADAS ---------------------
+//Dificultad por Mundo
+async function dificultadPorMundo(connection){
+    const [rows] = await connection.execute(`
+        SELECT n.id_mundo, n.num_nivel, AVG(p.estrellas) AS promedio_estrellas
+        FROM Partida p
+        JOIN Nivel n ON p.id_nivel = n.id_nivel
+        GROUP BY n.id_mundo, n.num_nivel
+        ORDER BY n.id_mundo, n.num_nivel;
+    `);
+    return rows;
+}
+
+
+//Jugadores Únicos por Nivel
+async function jugadoresUnicosPorNivel(connection){
+    const [rows] = await connection.execute(`
+        SELECT n.id_mundo, n.num_nivel, COUNT(DISTINCT p.id_jugador) AS jugadores
+        FROM Partida p
+        JOIN Nivel n ON p.id_nivel = n.id_nivel
+        GROUP BY n.id_mundo, n.num_nivel
+        ORDER BY n.id_mundo, n.num_nivel;
+    `);
+    return rows;
+}
+
+
+//----------------- Graficas individuales ----------------------------
+//Victorias por Nivel
+async function victoriasPorNivel(connection, userId){
+    const [rows] = await connection.execute(`
+        SELECT n.num_nivel, COUNT(*) AS victorias
+        FROM Partida p
+        JOIN Nivel n ON p.id_nivel = n.id_nivel
+        WHERE p.id_jugador = ?
+        AND p.victoria = 1
+        GROUP BY n.num_nivel
+        ORDER BY n.num_nivel;            
+    `, [userId]);
+    return rows;
+}
+
+
+//Precision VS Duracion
+async function precisionVSDuracion(connection, idJugador){
+    const [rows] = await connection.execute(`
+        SELECT  duracion, precision_juego
+        FROM Partida
+        WHERE id_jugador = ?
+    `, [idJugador]);
+    return rows;
+}
+
+
+async function habilidadJugador(connection, idJugador){
+    const [rows] = await connection.execute(`
+        SELECT
+            AVG(p.precision_juego) AS precision,
+            AVG(p.estrellas) AS consistencia,
+            AVG(p.duracion) AS velocidad_prom,
+            MAX(p.duracion) AS resistencia,
+            MAX(n.num_nivel) AS progreso
+        FROM Partida p
+        JOIN Nivel n ON p.id_nivel = n.id_nivel
+        WHERE p.id_jugador = ?
+    `, [idJugador]);
+    return rows;
+}
+
 export default {
   connect,
   login,
@@ -272,5 +326,9 @@ export default {
   puntuacionPromedioGeneral,
   puntuacionPromedioPorMundo,
   puntuacionPromedioNivel,
-  duracionPromedioPorMundo
+  duracionPromedioPorMundo,
+  dificultadPorMundo,
+  jugadoresUnicosPorNivel,
+  precisionVSDuracion,
+  habilidadJugador
 };

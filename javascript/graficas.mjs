@@ -1,5 +1,4 @@
-
-// import ;
+//import { text } from "body-parser";
 
 const g1 = document.getElementById('miGrafica').getContext('2d');
 const g2 = document.getElementById('miGrafica2').getContext('2d');
@@ -75,25 +74,9 @@ const miGrafica3 = new Chart(g3, {
 
 
 //------------------------- NUEVO ------------------------------------
-//Victorias por Nivel
-function crearGraficaVictorias(dataVictory){
-    const niveles = dataVictory.map(d => "Nivel " + d.num_nivel);
-    const victorias = dataVictory.map(d => d.victorias);
-    
-    new Chart(document.getElementById('graficaVictorias').getContext('2d'), {
-        type: "bar",
-        data:{
-            labels: niveles,
-            datasets: [{
-                label: "Victorias",
-                data: victorias
-            }]
-        }
-    });
-}
-
+//------------------------- Gráficas Generales -------------------------
 //Promedio Puntos General
-function crearGraficaPromedioGeneral(dataAVGGeneral){
+export function crearGraficaPromedioGeneral(dataAVGGeneral){
     const mundos = [...new Set(dataAVGGeneral.map(item => item.mundo))];
     const niveles = [...new Set(dataAVGGeneral.map(item => item.num_nivel))];
 
@@ -128,7 +111,7 @@ function crearGraficaPromedioGeneral(dataAVGGeneral){
 
 
 //Puntuacion Promedio Por Mundo
-function crearGraficaPromedioMundoGeneral(dataAVGMundo){
+export function crearGraficaPromedioMundoGeneral(dataAVGMundo){
     const niveles = dataAVGMundo.map(item => `Nivel ${item.num_nivel}`);
     const promedios = dataAVGMundo.map(item => item.PromedioPuntaje);
 
@@ -153,8 +136,9 @@ function crearGraficaPromedioMundoGeneral(dataAVGMundo){
     });
 }
 
+
 //Puntuacion Promedio Por Nivel
-function crearGraficaPromedioNivelGeneral(dataAVGNivel){
+export function crearGraficaPromedioNivelGeneral(dataAVGNivel){
     const promedio = dataAVGNivel[0].PromedioPuntaje;
 
     new Chart(document.getElementById('graficaAVGNivel').getContext('2d'), {
@@ -177,7 +161,7 @@ function crearGraficaPromedioNivelGeneral(dataAVGNivel){
 
 
 //Duracion Promedio por Mundo
-function crearGraficaPromedioDuracionMundos(dataDuracionMundos){
+export function crearGraficaPromedioDuracionMundos(dataDuracionMundos){
     const mundos = Array.from(new Set(dataDuracionMundos.map(item => item.mundo)));
     const niveles = Array.from(new Set(dataDuracionMundos.map(item => item.num_nivel)));
 
@@ -217,3 +201,149 @@ function crearGraficaPromedioDuracionMundos(dataDuracionMundos){
         }
     });
 }
+
+
+//Dificultad por Mundos
+export function crearGraficaDificultadPorNivel(dataDificultadMundo){
+    const dataset = dataDificultadMundo.map(d => ({
+        x: d.id_mundo,
+        y: d.num_nivel,
+        r: d.promedio_estrellas * 5
+    }));
+
+    new Chart(document.getElementById("graficaDificutadPorMundo").getContext('2d'),{
+        type: 'bubble',
+        data:{
+            datasets:[{
+                label:'Dificultad por Mundo',
+                data: dataset,
+                backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.6)`
+            }]
+        },
+        options:{
+            scales:{
+                x:{
+                    title:{display:true, text:'Mundo'}
+                },
+                y:{
+                    title:{display: true, text:'Nivel'}
+                }
+            }
+        }
+    });
+}
+
+
+//Jugadores Unicos
+export function crearGraficaJugadoresUnicos(dataJugadoresUnicos){
+    const niveles = dataJugadoresUnicos.map(d => "Nivel " + d.num_nivel);
+    const jugadores = dataJugadoresUnicos.map(d => d.jugadores);
+
+    new Chart(document.getElementById('graficaJugadoresUnicos').getContext('2d'),{
+        type: 'bar',
+        data:{
+            labels: niveles,
+            datasets:[{
+                label:'Jugadores que llegaron',
+                data: jugadores,
+                backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.6)`
+            }]
+        },
+        options: {
+            // indexAxis: 'y',
+            responsive: true,
+            scales: {
+                y: {beginAtZero: true},
+                x: {beginAtZero: true}
+            }
+        }
+    });
+}
+
+//------------------------- Gráficas Particulares -------------------------
+//Victorias por Nivel
+export function crearGraficaVictorias(dataVictory){
+    const niveles = dataVictory.map(d => "Nivel " + d.num_nivel);
+    const victorias = dataVictory.map(d => d.victorias);
+    
+    new Chart(document.getElementById('graficaVictorias').getContext('2d'), {
+        type: "bar",
+        data:{
+            labels: niveles,
+            datasets: [{
+                label: "Victorias",
+                data: victorias,
+                backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.6)`
+            }],
+        }
+    });
+}
+
+
+//Duracion VS Precision
+export function crearGraficaDuracionVSPrecision(dataPrecisionVSDuracion){
+    const puntos = dataPrecisionVSDuracion.map(p => ({
+        x: Number(p.duracion),
+        y: Number(p.precision_juego)
+    }));
+
+    new Chart(document.getElementById('graficaDuracionVSPrecision'), {
+        type: 'scatter',
+        data:{
+            datasets: [{
+                label: 'Partidas',
+                data: puntos,
+                backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.6)`
+            }],
+        },
+        options: {
+            scales: {
+                x: {
+                    title:{display: true, text: 'Duración (segundos)'}
+                },
+                y:{
+                    title:{display: true, text: 'Precisión (%)'},
+                    min: 0,
+                    max : 100
+                }
+            }
+        }
+    });
+}
+
+
+//Habilidad Jugador
+export function crearGraficaHabilidadJugador(dataHabilidadJugador){
+    new Chart(document.getElementById('graficaHabilidadJugador').getContext('2d'),{
+        type: 'radar',
+        data:{
+            labels:[
+                'Precisión',
+                'Consistencia',
+                'Velocidad',
+                'Resistencia',
+                'Progreso'
+            ],
+
+            datasets:[{
+                label: 'Perfil del jugador',
+                data:[
+                    dataHabilidadJugador.precision,
+                    dataHabilidadJugador.consistencia,
+                    200 - dataHabilidadJugador.velocidad,
+                    dataHabilidadJugador.resistencia / 2,
+                    dataHabilidadJugador.progreso * 20
+                ],
+                backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.6)`
+            }]
+        }
+    })
+}
+
+
+
+
+
+
+
+
