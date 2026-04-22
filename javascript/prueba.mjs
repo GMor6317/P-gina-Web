@@ -9,7 +9,9 @@ import {
     crearGraficaDificultadPorNivel,
     crearGraficaJugadoresUnicos,
     crearGraficaDuracionVSPrecision,
-    crearGraficaHabilidadJugador
+    crearGraficaHabilidadJugador,
+    crearGraficaVictoriasPorMundo,
+    crearGraficaWinRate
 } from "./graficas.mjs";
 
 
@@ -26,6 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const inicializarDashboard = async () => {
         //Generales
+        try {
+            const idMundo = localStorage.getItem('id_mundo') || 1;
+            await victoriasPorMundo(idMundo);
+        } catch (e) { console.error("Error en victorias por mundo: ", e); }
+
          try {
             await PromedioPuntajeGeneral();
         } catch (e) { console.error("Error en promedio general: ", e); }
@@ -75,6 +82,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 //--------------------------- NUEVO ----------------------------------
+//Victorias por Mundo
+async function victoriasPorMundo(mundoId){
+    const response = await fetch(
+        `${ API_URL }/victorias/mundo/${mundoId}`
+    );
+    const dataVictoriasMundo = await response.json();
+
+    crearGraficaVictoriasPorMundo(dataVictoriasMundo);
+}
+
+
 //Promedio Puntos General
 async function PromedioPuntajeGeneral(){
     const response = await fetch(
@@ -170,5 +188,16 @@ async function habilidadJugador(idJugador){
     const dataHabilidadJugador = await response.json();
 
     crearGraficaHabilidadJugador(dataHabilidadJugador);
+}
+
+
+//WinRate Jugador
+async function winRateJugador(userName, userApellido){
+    const response = await fetch(
+        `${ API_URL }/winrate/jugador/${userName}/${userApellido}`
+    );
+    const dataWinRate = await response.json();
+
+    crearGraficaWinRate(dataWinRate);
 }
 

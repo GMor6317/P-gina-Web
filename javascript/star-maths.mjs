@@ -321,6 +321,24 @@ async function habilidadJugador(connection, idJugador){
     return rows;
 }
 
+
+async function winRateJugador(connection, userName, userApellido){
+  const [rows] = await connection.execute(`
+    SELECT m.id_mundo, COUNT(CASE WHEN p.victoria = 1 THEN 1 END) * 100.0 / COUNT(*) AS PorcentajeWinRate
+        FROM Partida p
+        JOIN Nivel n ON n.id_nivel = p.id_nivel
+        JOIN Mundo m ON m.id_mundo = n.id_mundo
+        JOIN Jugador j ON j.id_jugador = p.id_jugador
+        WHERE j.nombre = ?
+        AND j.apellidos = ?
+        GROUP BY m.id_mundo
+    `, [userName, userApellido]);
+    return rows;
+}
+
+
+
+
 export default {
   connect,
   login,

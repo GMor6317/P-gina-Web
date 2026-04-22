@@ -213,7 +213,7 @@ app.get('/ranking/:id', async (req, res) => {
 });
 
 //-------------------------- NUEVO -----------------------
-//Victorias por Mundo
+// 1. Victorias por Mundo
 app.get('/victorias/mundo/:mundoId', async (req, res) => {
     let connection;
 
@@ -238,7 +238,7 @@ app.get('/victorias/mundo/:mundoId', async (req, res) => {
 });
 
 
-//Promedio Puntos General
+// 2. Promedio Puntos General
 app.get('/puntuacion/promedio', async (req,res) =>{
     let connection;
 
@@ -260,7 +260,7 @@ app.get('/puntuacion/promedio', async (req,res) =>{
     }
 });
 
-//Puntuacion Promedio Por Nivel
+// 3. Puntuacion Promedio Por Nivel
 app.get('/puntuacion/promedio/:id', async (req, res) => {
     let connection;
 
@@ -285,7 +285,7 @@ app.get('/puntuacion/promedio/:id', async (req, res) => {
 });
 
 
-//Puntuacion Promedio Por Mundo
+// 4. Puntuacion Promedio Por Mundo
 app.get('/puntuacion/promedio/mundo/:mundoId', async (req, res) =>{
     let connection;
 
@@ -310,7 +310,7 @@ app.get('/puntuacion/promedio/mundo/:mundoId', async (req, res) =>{
 });
 
 
-//Duracion Promedio por Mundo
+// 5. Duracion Promedio por Mundo
 app.get('/duracion/promedio/mundos', async (req, res) => {
     let connection;
 
@@ -334,7 +334,7 @@ app.get('/duracion/promedio/mundos', async (req, res) => {
 
 
 //----------------- GRAFICAS ACTUALIZADAS ------------------------
-//Dificultad por mundo
+// 6. Dificultad por mundo
 app.get('/dificultad/mundo', async (req, res) => {
     let connection;
 
@@ -357,7 +357,7 @@ app.get('/dificultad/mundo', async (req, res) => {
 });
 
 
-//Jugadores Únicos Por Nivel
+// 7. Jugadores Únicos Por Nivel
 app.get('/jugadores/nivel', async (req, res) => {
     let connection;
 
@@ -381,7 +381,7 @@ app.get('/jugadores/nivel', async (req, res) => {
 
 
 //-----------------Graficas individuales-----------------------------
-//Victorias por Nivel
+// 1. Victorias por Nivel
 app.get('/victorias/usuario/:nombre/:apellido', async (req, res) => {
     let connection;
 
@@ -407,7 +407,7 @@ app.get('/victorias/usuario/:nombre/:apellido', async (req, res) => {
 });
 
 
-//Duración vs precisión
+// 2. Duración vs precisión
 app.get('/duracion/precision/:nombre/:apellido', async (req, res) => {
     let connection;
 
@@ -433,7 +433,7 @@ app.get('/duracion/precision/:nombre/:apellido', async (req, res) => {
 });
 
 
-//Habilidad
+// 3. Habilidad
 app.get('/habilidad/jugador/:nombre/:apellido', async (req, res) => {
     let connection;
 
@@ -456,6 +456,32 @@ app.get('/habilidad/jugador/:nombre/:apellido', async (req, res) => {
     finally{
         if(connection) await connection.end();
     }
+});
+
+
+// 4. WinRate Jugador
+app.get('/winrate/jugador/:nombre/:apellido', async (req, res) => {
+  let connection;
+
+  try{
+    connection = await db.connect();
+
+    const userName = req.params.nombre;
+    const usarApellido = req.params.apellido;
+
+    const result = await db.winRateJugador(connection, userName, usarApellido);
+
+    res.json(result);
+  }
+  catch(err){
+    res.status(500).json({
+      exito: false,
+      aviso: err.message
+    });
+  }
+  finally{
+    if(connection) await connection.end();
+  }
 });
 
 

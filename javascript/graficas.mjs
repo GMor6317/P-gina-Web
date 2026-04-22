@@ -75,7 +75,45 @@ const miGrafica3 = new Chart(g3, {
 
 //------------------------- NUEVO ------------------------------------
 //------------------------- Gráficas Generales -------------------------
-//Promedio Puntos General
+// 1. Victorias por Mundo
+export function crearGraficaVictoriasPorMundo(dataWinRate){
+    const elemento = document.getElementById('graficaWinRate');
+
+    const winRate = parseFloat(dataWinRate[0].PorcentajeWinRate);
+    const loseRate = 100 - winRate;
+
+    new Chart(elemento.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Victorias', 'Derrotas'],
+            datasets: [{
+                data: [winRate, loseRate],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0,7)',
+                    'rgba(255, 99, 132, 0.7)'
+                ],
+                borderColor: ['#fff', '#fff'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Tasa de Éxito ${dataWinRate[0].id_mundo}`
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (context) => ` ${context.label}: ${context.raw.toFixed(1)}%`
+                    }
+                }
+            }
+        }
+    });
+}
+
+// 2. Promedio Puntos General
 export function crearGraficaPromedioGeneral(dataAVGGeneral){
     const mundos = [...new Set(dataAVGGeneral.map(item => item.mundo))];
     const niveles = [...new Set(dataAVGGeneral.map(item => item.num_nivel))];
@@ -110,7 +148,30 @@ export function crearGraficaPromedioGeneral(dataAVGGeneral){
 }
 
 
-//Puntuacion Promedio Por Mundo
+// 3. Puntuacion Promedio Por Nivel
+export function crearGraficaPromedioNivelGeneral(dataAVGNivel){
+    const promedio = dataAVGNivel[0].PromedioPuntaje;
+
+    new Chart(document.getElementById('graficaAVGNivel').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Nivel'],
+            datasets: [{
+                label: 'Promedio de puntaje',
+                data: [promedio],
+                backgroundColor: 'rgba(54, 162, 235, 0.6'
+            }]
+        },
+        options: {
+            scales: {
+                y: {beginAtZero: true}
+            }
+        }
+    });
+}
+
+
+// 4. Puntuacion Promedio Por Mundo
 export function crearGraficaPromedioMundoGeneral(dataAVGMundo){
     const niveles = dataAVGMundo.map(item => `Nivel ${item.num_nivel}`);
     const promedios = dataAVGMundo.map(item => item.PromedioPuntaje);
@@ -137,30 +198,7 @@ export function crearGraficaPromedioMundoGeneral(dataAVGMundo){
 }
 
 
-//Puntuacion Promedio Por Nivel
-export function crearGraficaPromedioNivelGeneral(dataAVGNivel){
-    const promedio = dataAVGNivel[0].PromedioPuntaje;
-
-    new Chart(document.getElementById('graficaAVGNivel').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['Nivel'],
-            datasets: [{
-                label: 'Promedio de puntaje',
-                data: [promedio],
-                backgroundColor: 'rgba(54, 162, 235, 0.6'
-            }]
-        },
-        options: {
-            scales: {
-                y: {beginAtZero: true}
-            }
-        }
-    });
-}
-
-
-//Duracion Promedio por Mundo
+// 5. Duracion Promedio por Mundo
 export function crearGraficaPromedioDuracionMundos(dataDuracionMundos){
     const mundos = Array.from(new Set(dataDuracionMundos.map(item => item.mundo)));
     const niveles = Array.from(new Set(dataDuracionMundos.map(item => item.num_nivel)));
@@ -203,7 +241,7 @@ export function crearGraficaPromedioDuracionMundos(dataDuracionMundos){
 }
 
 
-//Dificultad por Mundos
+// 6. Dificultad por Mundos
 export function crearGraficaDificultadPorNivel(dataDificultadMundo){
     const dataset = dataDificultadMundo.map(d => ({
         x: d.id_mundo,
@@ -234,7 +272,7 @@ export function crearGraficaDificultadPorNivel(dataDificultadMundo){
 }
 
 
-//Jugadores Unicos
+// 7. Jugadores Unicos Por Nivel
 export function crearGraficaJugadoresUnicos(dataJugadoresUnicos){
     const niveles = dataJugadoresUnicos.map(d => "Nivel " + d.num_nivel);
     const jugadores = dataJugadoresUnicos.map(d => d.jugadores);
@@ -261,7 +299,7 @@ export function crearGraficaJugadoresUnicos(dataJugadoresUnicos){
 }
 
 //------------------------- Gráficas Particulares -------------------------
-//Victorias por Nivel
+// 1. Victorias por Nivel
 export function crearGraficaVictorias(dataVictory){
     const niveles = dataVictory.map(d => "Nivel " + d.num_nivel);
     const victorias = dataVictory.map(d => d.victorias);
@@ -280,7 +318,7 @@ export function crearGraficaVictorias(dataVictory){
 }
 
 
-//Duracion VS Precision
+// 2. Duracion VS Precision
 export function crearGraficaDuracionVSPrecision(dataPrecisionVSDuracion){
     const puntos = dataPrecisionVSDuracion.map(p => ({
         x: Number(p.duracion),
@@ -312,7 +350,7 @@ export function crearGraficaDuracionVSPrecision(dataPrecisionVSDuracion){
 }
 
 
-//Habilidad Jugador
+// 3. Habilidad Jugador
 export function crearGraficaHabilidadJugador(dataHabilidadJugador){
     new Chart(document.getElementById('graficaHabilidadJugador').getContext('2d'),{
         type: 'radar',
@@ -339,6 +377,46 @@ export function crearGraficaHabilidadJugador(dataHabilidadJugador){
         }
     })
 }
+
+
+// 4. WinRate Jugador 
+export function crearGraficaWinRate(dataWinRate){
+    const elemento = document.getElementById('graficaWinRate');
+
+    const winRate = parseFloat(dataWinRate[0].PorcentajeWinRate);
+    const loseRate = 100 - winRate;
+
+    new Chart(elemento.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Victorias', 'Derrotas'],
+            datasets: [{
+                data: [winRate, loseRate],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0,7)',
+                    'rgba(255, 99, 132, 0.7)'
+                ],
+                borderColor: ['#fff', '#fff'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Tasa de Éxito ${dataWinRate[0].id_mundo}`
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (context) => ` ${context.label}: ${context.raw.toFixed(1)}%`
+                    }
+                }
+            }
+        }
+    });
+}
+
 
 
 
