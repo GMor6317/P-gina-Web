@@ -141,9 +141,9 @@ async function jugadoresUnicosPorNivel(){
 
 //--------------------- Graficas Individuales -------------------------
 //Victorias por Nivel
-async function cargarVictorias(idJugador){
+async function cargarVictorias(userName, userApellido){
     const response = await fetch(
-        `${ API_URL }/victorias/usuario/${idJugador}`
+        `${ API_URL }/victorias/usuario/${userName}/${userApellido}`
     );
     const dataVictory = await response.json();
 
@@ -152,9 +152,9 @@ async function cargarVictorias(idJugador){
 
 
 //Precision VS Duracion
-async function precisionVSDuracion(idJugador){
+async function precisionVSDuracion(nombreJugador, apellidoJugador){
     const response = await fetch(
-        `${ API_URL }/duracion/precision/${idJugador}`
+        `${ API_URL }/duracion/precision/${nombreJugador}/${apellidoJugador}`
     );
     const dataPrecisionVSDuracion = await response.json();
 
@@ -165,7 +165,7 @@ async function precisionVSDuracion(idJugador){
 //Habilidad Jugador
 async function habilidadJugador(idJugador){
     const response = await fetch(
-        `${ API_URL }/habilidad/jugador/${idJugador}`
+        `${ API_URL }/habilidad/jugador/${nombreJugador}/${apellidoJugador}`
     );
     const dataHabilidadJugador = await response.json();
 

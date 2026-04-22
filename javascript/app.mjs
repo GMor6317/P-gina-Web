@@ -382,15 +382,16 @@ app.get('/jugadores/nivel', async (req, res) => {
 
 //-----------------Graficas individuales-----------------------------
 //Victorias por Nivel
-app.get('/victorias/usuario/:id', async (req, res) => {
+app.get('/victorias/usuario/:nombre/:apellido', async (req, res) => {
     let connection;
 
     try{
         connection = await db.connect();
 
-        const userId = req.params.id;
+        const userName = req.params.nombre;
+        const userApellido = req.params.apellido;
 
-        const result = await db.victoriasPorNivel(connection, userId);
+        const result = await db.victoriasPorNivel(connection, userName, userApellido);
 
         res.json(result);
     }
@@ -407,15 +408,16 @@ app.get('/victorias/usuario/:id', async (req, res) => {
 
 
 //Duración vs precisión
-app.get('/duracion/precision/:idJugador', async (req, res) => {
+app.get('/duracion/precision/:nombre/:apellido', async (req, res) => {
     let connection;
 
     try{
         connection = await db.connect();
 
-        const idJugador = req.params.idJugador;
+        const nombreJugador = req.params.nombre;
+        const apellidoJugador = req.params.apellido;
 
-        const result = await db.precisionVSDuracion(connection, idJugador);
+        const result = await db.precisionVSDuracion(connection, nombreJugador, apellidoJugador);
 
         res.json(result);
     }
@@ -432,15 +434,16 @@ app.get('/duracion/precision/:idJugador', async (req, res) => {
 
 
 //Habilidad
-app.get('/habilidad/jugador/:idJugador', async (req, res) => {
+app.get('/habilidad/jugador/:nombre/:apellido', async (req, res) => {
     let connection;
 
     try{
         connection = await db.connect();
 
-        const idJugador = req.params.idJugador;
+        const nombreJugador = req.params.nombre;
+        const apellidoJugador = req.params.apellido;
 
-        const result = await db.habilidadJugador(connection, idJugador);
+        const result = await db.habilidadJugador(connection, nombreJugador, apellidoJugador);
 
         res.json(result);
     }

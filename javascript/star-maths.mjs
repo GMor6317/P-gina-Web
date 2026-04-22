@@ -275,27 +275,31 @@ async function jugadoresUnicosPorNivel(connection){
 
 //----------------- Graficas individuales ----------------------------
 //Victorias por Nivel
-async function victoriasPorNivel(connection, userId){
+async function victoriasPorNivel(connection, userName, userApellido){
     const [rows] = await connection.execute(`
         SELECT n.num_nivel, COUNT(*) AS victorias
         FROM Partida p
         JOIN Nivel n ON p.id_nivel = n.id_nivel
-        WHERE p.id_jugador = ?
+        JOIN Jugador j ON p.id_jugador = j.id_jugador
+        WHERE j.nombre = ?
+        AND j.apellidos = ? 
         AND p.victoria = 1
         GROUP BY n.num_nivel
         ORDER BY n.num_nivel;            
-    `, [userId]);
+    `, [userName, userApellido]);
     return rows;
 }
 
 
 //Precision VS Duracion
-async function precisionVSDuracion(connection, idJugador){
+async function precisionVSDuracion(connection, nombreJugador, apellidoJugador){
     const [rows] = await connection.execute(`
         SELECT  duracion, precision_juego
-        FROM Partida
-        WHERE id_jugador = ?
-    `, [idJugador]);
+        FROM Partida p
+        JOIN Jugador j ON p.id_jugador = j.id_jugador
+        WHERE j.nombre = ?
+        AND j.apellidos = ? 
+    `, [nombreJugador, apellidoJugador]);
     return rows;
 }
 
@@ -310,7 +314,9 @@ async function habilidadJugador(connection, idJugador){
             MAX(n.num_nivel) AS progreso
         FROM Partida p
         JOIN Nivel n ON p.id_nivel = n.id_nivel
-        WHERE p.id_jugador = ?
+        JOIN Jugador j ON p.id_jugador = j.id_jugador
+        WHERE j.nombre = ?
+        AND j.apellidos = ? 
     `, [idJugador]);
     return rows;
 }
