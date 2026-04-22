@@ -369,7 +369,6 @@ export default {
   registro, 
   puntaje, 
   ranking,
-  rankingAdministrador,
   victoriasPorMundo,
   victoriasPorNivel,
   puntuacionPromedioGeneral,
@@ -379,5 +378,7 @@ export default {
   dificultadPorMundo,
   jugadoresUnicosPorNivel,
   precisionVSDuracion,
-  habilidadJugador
+  habilidadJugador,
+  rankingAdministrador
+
 };
