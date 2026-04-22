@@ -484,6 +484,24 @@ app.get('/winrate/jugador/:nombre/:apellido', async (req, res) => {
   }
 });
 
+//--------------------- Ranking Administrador -------------------------
+app.get('/ranking/administrador', async (req, res) => {
+  let connection;
+  try {
+    connection = await db.connect();
+
+    const result = await db.rankingAdministrador(connection);
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      exito: false,
+      error: err.message
+    });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
 
 app.use((req, res) => {
   res.status(404).json({ aviso: "Not Found" });

@@ -337,7 +337,31 @@ async function winRateJugador(connection, userName, userApellido){
 }
 
 
+//------------------------ Ranking Administrador -------------------------
+export async function rankingAdministrador(connection) {
+  const [rows] = await connection.execute(`
+    SELECT 
+      RANK() OVER (ORDER BY SUM(p.puntaje) DESC) as posicion,
+      j.nombre_usuario,
+      j.nombre,
+      j.apellidos,
+      COALESCE(SUM(p.puntaje), 0) as puntaje_total
+    FROM jugador j
+    LEFT JOIN partida p ON p.id_jugador = j.id_jugador
+    GROUP BY j.id_jugador
+    ORDER BY puntaje_total DESC
+  `);
 
+  return {
+    exito: true,
+    datos: rows.map(r => ({
+      posicion: r.posicion,
+      usuario: r.nombre_usuario,
+      nombre_real: `${r.nombre} ${r.apellidos}`, 
+      puntaje: Number(r.puntaje_total)
+    }))
+  };
+}
 
 export default {
   connect,
@@ -345,6 +369,7 @@ export default {
   registro, 
   puntaje, 
   ranking,
+  rankingAdministrador,
   victoriasPorMundo,
   victoriasPorNivel,
   puntuacionPromedioGeneral,
