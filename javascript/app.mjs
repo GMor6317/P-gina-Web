@@ -305,16 +305,18 @@ app.get('/puntuacion/promedio', async (req,res) =>{
     }
 });
 
-// 3. Puntuacion Promedio Por Nivel
-app.get('/puntuacion/promedio/:id', async (req, res) => {
+// 3. Puntuacion Promedio Por Nivel ****
+app.get('/puntuacion/promedio/:idMundo/:idNivel', async (req, res) => {
     let connection;
 
     try{
         connection = await db.connect();
 
-        const nivelId = req.params.id;
+        const mundoId = req.params.idMundo;
 
-        const result = await db.puntuacionPromedioNivel(connection, nivelId);
+        const nivelId = req.params.idNivel;
+
+        const result = await db.puntuacionPromedioNivel(connection, mundoId, nivelId);
 
         res.json(result);
     }

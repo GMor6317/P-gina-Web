@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //--------------------------- NUEVO ----------------------------------
 // Gráficas Generales
-//Victorias por Mundo
+//Victorias por Mundo - F
 export async function victoriasPorMundo(mundoId){
     const response = await fetch(
         `${ API_URL }/victorias/mundo/${mundoId}`
@@ -94,7 +94,7 @@ export async function victoriasPorMundo(mundoId){
 }
 
 
-//Promedio Puntos General
+//Promedio Puntos General - F
 export async function PromedioPuntajeGeneral(){
     const response = await fetch(
         `${ API_URL }/puntuacion/promedio`
@@ -105,10 +105,10 @@ export async function PromedioPuntajeGeneral(){
 }
 
 
-//Puntuacion Promedio Por Nivel
-export async function PromedioPuntajeNivel(nivelId){
+//Puntuacion Promedio Por Nivel - NF *******
+export async function PromedioPuntajeNivel(mundoId, nivelId){
     const response = await fetch(
-        `${ API_URL }/puntuacion/promedio/${nivelId}`
+        `${ API_URL }/puntuacion/promedio/${mundoId}/${nivelId}`
     );
     const dataAVGNivel = await response.json();
 
@@ -116,7 +116,7 @@ export async function PromedioPuntajeNivel(nivelId){
 }
 
 
-//Puntuacion Promedio Por Mundo
+//Puntuacion Promedio Por Mundo - F
 export async function PromedioPuntajePorMundo(mundoId){
     const response = await fetch(
         `${ API_URL }/puntuacion/promedio/mundo/${mundoId}`
@@ -126,7 +126,7 @@ export async function PromedioPuntajePorMundo(mundoId){
     crearGraficaPromedioMundoGeneral(dataAVGMundo);
 }
 
-//Duracion Promedio por Mundo
+//Duracion Promedio por Mundo - F
 export async function duracionPromedioPorMundo(){
     const response = await fetch(
         `${ API_URL }/duracion/promedio/mundos`
@@ -137,7 +137,7 @@ export async function duracionPromedioPorMundo(){
 }
 
 //------------------- GRAFICAS ACTUALIZADAS --------------------------
-//Dificultad por Mundo
+//Dificultad por Mundo - F
 export async function dificultadPorMundo(){
     const response = await fetch(
         `${ API_URL }/dificultad/mundo`
@@ -148,7 +148,7 @@ export async function dificultadPorMundo(){
 }
 
 
-//Jugadores Únicos por Nivel
+//Jugadores Únicos por Nivel - F
 export async function jugadoresUnicosPorNivel(){
     const response = await fetch(
         `${ API_URL }/jugadores/nivel`
@@ -159,7 +159,7 @@ export async function jugadoresUnicosPorNivel(){
 }
 
 //--------------------- Graficas Individuales -------------------------
-//Victorias por Nivel
+//Victorias por Nivel - F 
 export async function cargarVictorias(userName, userApellido){
     const response = await fetch(
         `${ API_URL }/victorias/usuario/${userName}/${userApellido}`
@@ -170,7 +170,7 @@ export async function cargarVictorias(userName, userApellido){
 }
 
 
-//Precision VS Duracion
+//Precision VS Duracion - F
 export async function precisionVSDuracion(nombreJugador, apellidoJugador){
     const response = await fetch(
         `${ API_URL }/duracion/precision/${nombreJugador}/${apellidoJugador}`
@@ -181,10 +181,10 @@ export async function precisionVSDuracion(nombreJugador, apellidoJugador){
 }
 
 
-//Habilidad Jugador
-export async function habilidadJugador(idJugador){
+//Habilidad Jugador***
+export async function habilidadJugador(userName, userApellido){
     const response = await fetch(
-        `${ API_URL }/habilidad/jugador/${nombreJugador}/${apellidoJugador}`
+        `${ API_URL }/habilidad/jugador/${userName}/${userApellido}`
     );
     const dataHabilidadJugador = await response.json();
 
@@ -192,7 +192,7 @@ export async function habilidadJugador(idJugador){
 }
 
 
-//WinRate Jugador
+//WinRate Jugador - F
 export async function winRateJugador(userName, userApellido){
     const response = await fetch(
         `${ API_URL }/winrate/jugador/${userName}/${userApellido}`

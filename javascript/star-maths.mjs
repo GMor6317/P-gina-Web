@@ -280,13 +280,15 @@ async function puntuacionPromedioPorMundo(connection, mundoId){
 }
 
 //Puntuacion Promedio Por Nivel
-async function puntuacionPromedioNivel(connection, nivelId){
+async function puntuacionPromedioNivel(connection, mundoId, nivelId){
     const [rows] = await connection.execute(`
-        SELECT n.num_nivel, AVG(puntaje) AS PromedioPuntaje
+        SELECT m.id_mundo, n.num_nivel, AVG(puntaje) AS PromedioPuntaje
         FROM Partida p
+        JOIN Nivel n ON p.id_nivel = n.id_nivel
+        JOIN Mundo m ON n.id_mundo = n.id_mundo
+        WHERE p.id_mundo = ?
         WHERE p.id_nivel = ?
-        GROUP BY p.id_nivel
-    `, [nivelId]);
+    `, [mundoId, nivelId]);
     return rows;
 }
 
@@ -360,7 +362,8 @@ async function precisionVSDuracion(connection, nombreJugador, apellidoJugador){
 }
 
 
-async function habilidadJugador(connection, idJugador){
+//Habilidad Jugador
+async function habilidadJugador(connection, userName, userApellido){
     const [rows] = await connection.execute(`
         SELECT
             AVG(p.precision_juego) AS precisio,
@@ -373,11 +376,12 @@ async function habilidadJugador(connection, idJugador){
         JOIN Jugador j ON p.id_jugador = j.id_jugador
         WHERE j.nombre = ?
         AND j.apellidos = ? 
-    `, [idJugador]);
+    `, [userName, userApellido]);
     return rows;
 }
 
 
+//Win Rate jugador
 async function winRateJugador(connection, userName, userApellido){
   const [rows] = await connection.execute(`
     SELECT m.id_mundo, SUM(CASE WHEN p.victoria = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*) AS WinRate
