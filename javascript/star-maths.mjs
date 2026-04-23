@@ -226,7 +226,7 @@ async function puntuacionPromedioPorMundo(connection, mundoId){
 //Puntuacion Promedio Por Nivel
 async function puntuacionPromedioNivel(connection, nivelId){
     const [rows] = await connection.execute(`
-        SELECT AVG(puntaje) AS PromedioPuntaje
+        SELECT n.num_nivel, AVG(puntaje) AS PromedioPuntaje
         FROM Partida p
         WHERE p.id_nivel = ?
         GROUP BY p.id_nivel
@@ -307,7 +307,7 @@ async function precisionVSDuracion(connection, nombreJugador, apellidoJugador){
 async function habilidadJugador(connection, idJugador){
     const [rows] = await connection.execute(`
         SELECT
-            AVG(p.precision_juego) AS precision,
+            AVG(p.precision_juego) AS precisio,
             AVG(p.estrellas) AS consistencia,
             AVG(p.duracion) AS velocidad_prom,
             MAX(p.duracion) AS resistencia,
@@ -324,7 +324,7 @@ async function habilidadJugador(connection, idJugador){
 
 async function winRateJugador(connection, userName, userApellido){
   const [rows] = await connection.execute(`
-    SELECT m.id_mundo, COUNT(CASE WHEN p.victoria = 1 THEN 1 END) * 100.0 / COUNT(*) AS PorcentajeWinRate
+    SELECT m.id_mundo, SUM(CASE WHEN p.victoria = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*) AS WinRate
         FROM Partida p
         JOIN Nivel n ON n.id_nivel = p.id_nivel
         JOIN Mundo m ON m.id_mundo = n.id_mundo
@@ -332,6 +332,7 @@ async function winRateJugador(connection, userName, userApellido){
         WHERE j.nombre = ?
         AND j.apellidos = ?
         GROUP BY m.id_mundo
+        ORDER BY m.id_mundo
     `, [userName, userApellido]);
     return rows;
 }
@@ -379,6 +380,6 @@ export default {
   jugadoresUnicosPorNivel,
   precisionVSDuracion,
   habilidadJugador,
-  rankingAdministrador
-
+  rankingAdministrador,
+  winRateJugador
 };

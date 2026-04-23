@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="javascript/graficasGenerales.mjs"></script>
 </head>
 
 <body>
@@ -39,26 +40,25 @@
         <div class = "filtros" id = "filtrosGraficas">
             <select name="filtroMundo" id="filtroMundo">
                 <option value="todos" selected = "selected">Todos los Mundos</option>
-                <option value="mundo1">Mundo 1</option>
-                <option value="mundo2">Mundo 2</option>
-                <option value="mundo3">Mundo 3</option>
-                <option value="mundo4">Mundo 4</option>
-                <option value="mundo5">Mundo 5</option>
-                <option value="mundo6">Nivel Jefe</option>
+                <option value="1">Mundo 1</option>
+                <option value="2">Mundo 2</option>
+                <option value="3">Mundo 3</option>
+                <option value="4">Mundo 4</option>
+                <option value="5">Mundo 5</option>
+                <option value="6">Nivel Jefe</option>
             </select>
 
             <select name="filtroNivel" id="filtroNivel">
                 <option value="todos" selected = "selected">Todos los Niveles</option>
-                <option value="nivel1">Nivel 1</option>
-                <option value="nivel2">Nivel 2</option>
-                <option value="nivel3">Nivel 3</option>
-                <option value="nivel4">Nivel 4</option>
-                
+                <option value="1">Nivel 1</option>
+                <option value="2">Nivel 2</option>
+                <option value="3">Nivel 3</option>
+                <option value="4">Nivel 4</option>
             </select>
 
         </div>
         <div class="Graficas" id="graficasGeneralesContainer">
-            <div class="Grafica">
+            <!-- <div class="Grafica">
                 <h2>Gráfica 1</h2>
                 <canvas id="miGrafica"></canvas>
             </div>
@@ -69,7 +69,7 @@
             <div class="Grafica">
                 <h2>Gráfica 3</h2>
                 <canvas id="miGrafica3"></canvas>
-            </div>
+            </div> -->
             <!----------------------------- NUEVO ----------------------->
             <div class="Grafica">
                 <h2>Victorias Por mundo</h2>
@@ -80,11 +80,11 @@
                 <canvas id="graficaAVGGeneral"></canvas>
             </div>
             <div class="Grafica">
-                <h2>Promedio Puntaje Por Nivel</h2>
+                <h2>Promedio Puntaje Por Mundo</h2>
                 <canvas id="graficaAVGMundo"></canvas>
             </div>
             <div class="Grafica">
-                <h2>Promedio Puntaje Por Mundo</h2>
+                <h2>Promedio Puntaje Por Nivel</h2>
                 <canvas id="graficaAVGNivel"></canvas>
             </div>
             <div class="Grafica">
@@ -102,7 +102,7 @@
                 <canvas id="graficaJugadoresUnicos"></canvas>
             </div>
             <div class="Grafica">
-                <h2>Jugadores Unicos</h2>
+                <h2>Win Rate </h2>
                 <canvas id="graficaWinRate"></canvas>
             </div>
         </div>
