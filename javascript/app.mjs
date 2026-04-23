@@ -485,7 +485,7 @@ app.get('/winrate/jugador/:nombre/:apellido', async (req, res) => {
 });
 
 //--------------------- Ranking Administrador -------------------------
-app.get('/ranking/administrador', async (req, res) => {
+app.get('/dashboard/ranking', async (req, res) => {
   let connection;
   try {
     connection = await db.connect();
