@@ -347,8 +347,8 @@ export async function rankingAdministrador(connection) {
       j.nombre,
       j.apellidos,
       COALESCE(SUM(p.puntaje), 0) as puntaje_total
-    FROM jugador j
-    LEFT JOIN partida p ON p.id_jugador = j.id_jugador
+    FROM Jugador j
+    LEFT JOIN Partida p ON p.id_jugador = j.id_jugador
     GROUP BY j.id_jugador
     ORDER BY puntaje_total DESC
   `);
