@@ -54,6 +54,13 @@ async function registro(connection, data) {
       grado_escolar
     ]
   );
+  
+  const idJugador=result.insertId;
+  await connection.execute (
+    `INSERT INTO Configuracion 
+    (vol_efectos, vol_musica, brillo, id_jugador)
+    VALUES (80, 80, 100, ?)`,
+    [idJugador]);
 
   return {
     exito: true,
@@ -61,6 +68,7 @@ async function registro(connection, data) {
     id_jugador: result.insertId
   };
 }
+
 
 async function puntaje(connection, data) {
   const {
@@ -74,40 +82,32 @@ async function puntaje(connection, data) {
     nivel
   } = data;
 
-  const [nivelRows] = await connection.execute(
-    `SELECT id_nivel FROM Nivel WHERE id_mundo = ? AND num_nivel = ?`,
-    [id_mundo, nivel]
-  );
+  try {
+    await connection.execute(
+      "CALL RegistroDePartida(?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        puntaje,
+        duracion,
+        victoria,
+        estrellas,
+        precision,
+        id_jugador,
+        id_mundo,
+        nivel
+      ]
+    );
 
-  if (nivelRows.length === 0) {
+    return {
+      exito: true,
+      aviso: "Partida guardada"
+    };
+
+  } catch (err) {
     return {
       exito: false,
-      aviso: "Nivel no encontrado"
+      aviso: err.message
     };
   }
-
-  const id_nivel = nivelRows[0].id_nivel;
-
-  const [result] = await connection.execute(
-    `INSERT INTO Partida 
-    (puntaje, duracion, victoria, estrellas, precision_juego, id_jugador, id_nivel)
-    VALUES (?, ?, ?, ?, ?, ?, ?)`,
-    [
-      puntaje,
-      duracion,
-      victoria,
-      estrellas,
-      precision,
-      id_jugador,
-      id_nivel
-    ]
-  );
-
-  return {
-    exito: true,
-    aviso: "Partida guardada",
-    id_partida: result.insertId
-  };
 }
 
 export async function ranking(connection, userId) {
@@ -182,6 +182,62 @@ top.forEach(p => {
   };
 }
 
+
+async function configuracion (connection, data){
+  const {
+    vol_efectos,
+    vol_musica,
+    brillo, 
+    id_jugador
+  } =data;
+  
+  try{
+    await connection.execute(
+     "update Configuracion set vol_efectos=?, vol_musica=?, brillo=? where id_jugador=?;", 
+     [
+       vol_efectos,
+       vol_musica, 
+       brillo, 
+       id_jugador
+       ]
+      );
+      return {
+        exito: true, 
+        aviso: "se guardo la configuracion"
+      };
+      }
+      catch (err) {
+        return {
+          exito: false, 
+          aviso: err.message
+        };
+      }
+}
+
+async function CualConfiguracion(connection, id_jugador ){
+  try {
+    const [rows]=await connection.execute (
+      `Select vol_musica, vol_efectos, brillo from Configuracion where id_jugador=?`, 
+      [id_jugador]);
+      
+      if (rows.length==0){
+        return{
+          exito:false, 
+          aviso: "no hay configuracion"
+        };
+      }
+      return {
+        exito:true, 
+        configuracion:rows[0]
+      };
+  }
+  catch (err){
+    return {
+      exito: false, 
+      aviso: err.message
+    };
+  }
+}
 //------------------------- NUEVO -----------------------
 async function victoriasPorMundo(connection, mundoId){
     const [rows] = await connection.execute(`
@@ -337,8 +393,6 @@ async function winRateJugador(connection, userName, userApellido){
     return rows;
 }
 
-
-//------------------------ Ranking Administrador -------------------------
 export async function rankingAdministrador(connection) {
   const [rows] = await connection.execute(`
     SELECT 
@@ -370,6 +424,7 @@ export default {
   registro, 
   puntaje, 
   ranking,
+  configuracion,
   victoriasPorMundo,
   victoriasPorNivel,
   puntuacionPromedioGeneral,
@@ -381,5 +436,6 @@ export default {
   precisionVSDuracion,
   habilidadJugador,
   rankingAdministrador,
-  winRateJugador
+  winRateJugador, 
+  CualConfiguracion
 };

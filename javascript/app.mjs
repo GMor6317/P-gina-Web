@@ -145,7 +145,7 @@ app.post('/registro', async (req, res) => {
     }
   }
 });
-
+  
 
 app.post('/puntaje', async (req, res) => {
   let connection;
@@ -195,9 +195,9 @@ app.get('/ranking/:id', async (req, res) => {
   try {
     connection = await db.connect();
 
-    const userId = req.params.id;
+    const JugadorId = req.params.id;
 
-    const result = await db.ranking(connection, userId);
+    const result = await db.ranking(connection, JugadorId);
 
     res.json(result);
 
@@ -212,6 +212,49 @@ app.get('/ranking/:id', async (req, res) => {
   }
 });
 
+app.post ('/configuracion', async (req, res) => {
+  let connection;
+  try {
+  const data=req.body;
+  
+  connection =await db.connect ();
+  const result =await db.configuracion (connection, data);
+  
+  res.json (result);}
+  
+  catch (err){
+      return res.status(500).json({
+      exito: false,
+      aviso: err.message
+    });
+
+  } finally {
+    if (connection) {
+      await connection.end();
+      }    
+  }
+});
+
+ app.get ('/configuracion/:id', async(req, res)=>{
+   let connection;
+   try {
+     connection=await db.connect ();
+     const id_jugador = req.params.id;
+     const result = await db.CualConfiguracion(connection, id_jugador);
+     res.json(result);
+   }
+   catch (err){
+     res.status(500).json({
+       exito:false,
+       aviso: err.message
+     }
+       );
+   }
+   finally{
+     if (connection) await connection.end;
+   }
+ });
+  
 //-------------------------- NUEVO -----------------------
 // 1. Victorias por Mundo
 app.get('/victorias/mundo/:mundoId', async (req, res) => {
@@ -221,6 +264,8 @@ app.get('/victorias/mundo/:mundoId', async (req, res) => {
         connection = await db.connect();
 
         const mundoId = req.params.mundoId;
+
+
 
         const result = await db.victoriasPorMundo(connection, mundoId);
 
@@ -485,7 +530,7 @@ app.get('/winrate/jugador/:nombre/:apellido', async (req, res) => {
 });
 
 //--------------------- Ranking Administrador -------------------------
-app.get('/dashboard/ranking', async (req, res) => {
+app.get('/ranking/administrador', async (req, res) => {
   let connection;
   try {
     connection = await db.connect();
