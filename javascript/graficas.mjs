@@ -178,7 +178,7 @@ export function crearGraficaPromedioGeneral(dataAVGGeneral){
 }
 
 
-// 3. Puntuacion Promedio Por Nivel
+// 3. Puntuacion Promedio Por Nivel ****
 export function crearGraficaPromedioNivelGeneral(dataAVGNivel){
     const nivel = dataAVGNivel.map(n => `Nivel${n.num_nivel}`);
     const promedio = dataAVGNivel[0].PromedioPuntaje;
@@ -209,7 +209,7 @@ export function crearGraficaPromedioNivelGeneral(dataAVGNivel){
 }
 
 
-// 4. Puntuacion Promedio Por Mundo
+// 4. Puntuacion Promedio Por Mundo ****
 export function crearGraficaPromedioMundoGeneral(dataAVGMundo){
     
     const niveles = dataAVGMundo.map(item => `Nivel ${item.num_nivel}`);
@@ -361,28 +361,6 @@ export function crearGraficaJugadoresUnicos(dataJugadoresUnicos){
             }
         }
     });
-
-    // graficaJugadoresUnicos = new Chart(document.getElementById('graficaJugadoresUnicos').getContext('2d'),{
-    //     type: 'bar',
-    //     data:{
-    //         labels: niveles,
-    //         datasets:[{
-    //             label:'Jugadores que llegaron',
-    //             data: jugadores,
-    //             backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.2)`,
-    //             borderWidth: 1,
-    //             borderColor: 'black'
-    //         }]
-    //     },
-    //     options: {
-    //         indexAxis: 'y',
-    //         responsive: true,
-    //         scales: {
-    //             y: {beginAtZero: true},
-    //             x: {beginAtZero: true}
-    //         }
-    //     }
-    // });
 }
 
 //------------------------- Gráficas Particulares -------------------------

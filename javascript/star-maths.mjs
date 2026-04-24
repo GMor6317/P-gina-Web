@@ -286,8 +286,8 @@ async function puntuacionPromedioNivel(connection, mundoId, nivelId){
         FROM Partida p
         JOIN Nivel n ON p.id_nivel = n.id_nivel
         JOIN Mundo m ON n.id_mundo = n.id_mundo
-        WHERE p.id_mundo = ?
-        WHERE p.id_nivel = ?
+        WHERE m.id_mundo = ?
+        AND p.id_nivel = ?
     `, [mundoId, nivelId]);
     return rows;
 }
