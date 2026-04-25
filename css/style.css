@@ -48,7 +48,6 @@ header {
     text-decoration: none;
     transition: color 0.3s, transform 0.2s;
     display: flex;
-    padding-right: 50px;
 }
 
 .btn_home:hover {
