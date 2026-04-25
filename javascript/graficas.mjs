@@ -178,35 +178,87 @@ export function crearGraficaPromedioGeneral(dataAVGGeneral){
 }
 
 
-// 3. Puntuacion Promedio Por Nivel ****
+// // 3. Puntuacion Promedio Por Nivel ****
+// export function crearGraficaPromedioNivelGeneral(dataAVGNivel){
+//     const nivel = dataAVGNivel.map(n => `Nivel${n.num_nivel}`);
+//     const promedio = dataAVGNivel.map(item => item.PromedioPuntaje);
+
+//     if(graficaPromedioGeneralNivel){
+//         graficaPromedioGeneralNivel.destroy();
+//     }
+
+//     graficaPromedioGeneralNivel = new Chart(document.getElementById('graficaAVGNivel').getContext('2d'), {
+//         type: 'bar',
+//         data: {
+//             // labels: ['Nivel: ' + dataAVGNivel[0]],
+//             labels: nivel,
+//             datasets: [{
+//                 label: 'Promedio de puntaje',
+//                 data: promedio,
+//                 backgroundColor: 'rgba(54, 162, 235, 0.2',
+//                 borderWidth: 1,
+//                 borderColor: 'black'
+//             }]
+//         },
+//         options: {
+//             scales: {
+//                 y: {beginAtZero: true}
+//             }
+//         }
+//     });
+// }
+
+
 export function crearGraficaPromedioNivelGeneral(dataAVGNivel){
-    const nivel = dataAVGNivel.map(n => `Nivel${n.num_nivel}`);
-    const promedio = dataAVGNivel[0].PromedioPuntaje;
+    const nivel = dataAVGNivel.map(n => `Nivel ${n.num_nivel}`);
+    const promedio = dataAVGNivel.map(n => Number(n.PromedioPuntaje) || 0);
+    
+    const idMundo = dataAVGNivel[0].id_mundo;
 
     if(graficaPromedioGeneralNivel){
         graficaPromedioGeneralNivel.destroy();
     }
 
-    graficaPromedioGeneralNivel = new Chart(document.getElementById('graficaAVGNivel').getContext('2d'), {
+    const ctx = document.getElementById('graficaAVGNivel').getContext('2d');
+
+    graficaPromedioGeneralNivel = new Chart(ctx, {
         type: 'bar',
         data: {
-            // labels: ['Nivel: ' + dataAVGNivel[0]],
             labels: nivel,
             datasets: [{
                 label: 'Promedio de puntaje',
-                data: [promedio],
-                backgroundColor: 'rgba(54, 162, 235, 0.2',
-                borderWidth: 1,
-                borderColor: 'black'
+                data: promedio,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
             }]
         },
         options: {
+            responsive: true,
+            plugins:{
+                legend:{
+                    display:true
+                }
+            },
             scales: {
-                y: {beginAtZero: true}
+                y: {
+                    beginAtZero: true,
+                    title:{
+                        display:true,
+                        text:"Puntaje promedio"
+                    }
+                },
+                x:{
+                    title:{
+                        display:true,
+                        text: `Datos del Mundo ${idMundo}`
+                    }
+                }
             }
         }
     });
 }
+
 
 
 // 4. Puntuacion Promedio Por Mundo ****
@@ -234,11 +286,21 @@ export function crearGraficaPromedioMundoGeneral(dataAVGMundo){
         options: {
             responsive: true,
             scales: {
-                y: {beginAtZero: true}
+                y: {beginAtZero: true},
+                x: {
+                    title:{
+                        display: true,
+                        text: `Mundo`
+                    }
+                }
             }
         }
     });
 }
+
+
+
+
 
 
 // 5. Duracion Promedio por Mundo

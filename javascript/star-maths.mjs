@@ -285,7 +285,7 @@ async function puntuacionPromedioNivel(connection, mundoId, nivelId){
         SELECT m.id_mundo, n.num_nivel, AVG(puntaje) AS PromedioPuntaje
         FROM Partida p
         JOIN Nivel n ON p.id_nivel = n.id_nivel
-        JOIN Mundo m ON n.id_mundo = n.id_mundo
+        JOIN Mundo m ON n.id_mundo = m.id_mundo
         WHERE m.id_mundo = ?
         AND p.id_nivel = ?
     `, [mundoId, nivelId]);

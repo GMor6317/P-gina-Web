@@ -333,7 +333,8 @@ app.get('/puntuacion/promedio/:idMundo/:idNivel', async (req, res) => {
 
 
 // 4. Puntuacion Promedio Por Mundo
-app.get('/puntuacion/promedio/mundo/:mundoId', async (req, res) =>{
+// app.get('/puntuacion/promedio/mundo/:mundoId', async (req, res) =>{
+  app.get('/prueba/:mundoId', async (req, res) =>{
     let connection;
 
     try{

@@ -5,16 +5,23 @@ import { PromedioPuntajeNivel, PromedioPuntajePorMundo, victoriasPorMundo } from
 const menuMundo = document.getElementById("filtroMundo");
 const menuNivel = document.getElementById("filtroNivel");
 
+let idMundoSeleccionado = null;
+ 
 menuMundo.addEventListener("change", function(){
-    const idMundoSeleccionado = parseInt(this.value);
+    //const idMundoSeleccionado = parseInt(this.value);
+    idMundoSeleccionado = parseInt(this.value);
     console.log("Mundo seleccionado: ", idMundoSeleccionado);
+
     llamarGraficasPorMundo(idMundoSeleccionado);
 });
 
 menuNivel.addEventListener("change", function(){
-    const idNivelSeleccionado = this.value;
-    console.log("Nivel seleccionado: ", idNivelSeleccionado);
-    llamarGraficasPorNivel(idNivelSeleccionado);
+    const idNivelSeleccionado = parseInt(this.value);
+
+    if(idMundoSeleccionado){
+        console.log("Nivel seleccionado: ", idNivelSeleccionado);
+        llamarGraficasPorNivel(idMundoSeleccionado, idNivelSeleccionado);
+    }
 });
 
 
@@ -26,24 +33,8 @@ function llamarGraficasPorMundo(idMundo){
 }
 
 
-function llamarGraficasPorNivel(idNivel){
-    PromedioPuntajeNivel(idNivel);
-
-}
-
-
-
-
-
-
-function almacenarMundo(idMundo){
-    mundo_nivel.set("mundo", idMundo);
-}
-
-
-
-function almacenarNivel(idNivel){
-    mundo_nivel.set("nivel", idNivel);
+function llamarGraficasPorNivel(idMundo, idNivel){
+    PromedioPuntajeNivel(idMundo, idNivel);
 }
 
 
