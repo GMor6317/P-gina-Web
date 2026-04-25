@@ -459,7 +459,7 @@ export function crearGraficaDuracionVSPrecision(dataPrecisionVSDuracion){
     }));
 
     if(graficaDuracionVSPrecision){
-        graficaDificultadPorNivel.destroy();
+        graficaDuracionVSPrecision.destroy();
     }
 
     graficaDuracionVSPrecision = new Chart(document.getElementById('graficaDuracionVSPrecision'), {
@@ -488,45 +488,150 @@ export function crearGraficaDuracionVSPrecision(dataPrecisionVSDuracion){
 
 
 // 3. Habilidad Jugador
+// export function crearGraficaHabilidadJugador(dataHabilidadJugador){
+
+//     if(graficaHabilidadJugador){
+//         graficaHabilidadJugador.destroy();
+//     }
+
+//     graficaHabilidadJugador = new Chart(document.getElementById('graficaHabilidadJugador').getContext('2d'),{
+//         type: 'radar',
+//         data:{
+//             labels:[
+//                 'Precisión',
+//                 'Consistencia',
+//                 'Velocidad',
+//                 'Resistencia',
+//                 'Progreso'
+//             ],
+
+//             datasets:[{
+//                 label: 'Perfil del jugador',
+//                 data:[
+//                     dataHabilidadJugador.precisio,
+//                     dataHabilidadJugador.consistencia,
+//                     200 - dataHabilidadJugador.velocidad_prom,
+//                     dataHabilidadJugador.resistencia / 2,
+//                     dataHabilidadJugador.progreso * 20
+//                 ],
+//                 backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.2)`
+//             }]
+//         }
+//     })
+// }
+
 export function crearGraficaHabilidadJugador(dataHabilidadJugador){
+
+    if(!dataHabilidadJugador || dataHabilidadJugador.length === 0){
+        console.warn("No hay datos del jugador");
+        return;
+    }
+
+    const datos = dataHabilidadJugador[0];
 
     if(graficaHabilidadJugador){
         graficaHabilidadJugador.destroy();
     }
 
-    graficaHabilidadJugador = new Chart(document.getElementById('graficaHabilidadJugador').getContext('2d'),{
-        type: 'radar',
-        data:{
-            labels:[
-                'Precisión',
-                'Consistencia',
-                'Velocidad',
-                'Resistencia',
-                'Progreso'
-            ],
-
-            datasets:[{
-                label: 'Perfil del jugador',
-                data:[
-                    dataHabilidadJugador.precision,
-                    dataHabilidadJugador.consistencia,
-                    200 - dataHabilidadJugador.velocidad,
-                    dataHabilidadJugador.resistencia / 2,
-                    dataHabilidadJugador.progreso * 20
+    graficaHabilidadJugador = new Chart(
+        document.getElementById('graficaHabilidadJugador').getContext('2d'),
+        {
+            type: 'radar',
+            data:{
+                labels:[
+                    'Precisión',
+                    'Consistencia',
+                    'Velocidad',
+                    'Resistencia',
+                    'Progreso'
                 ],
-                backgroundColor : `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.2)`
-            }]
+                datasets:[{
+                    label: 'Perfil del jugador',
+                    data:[
+                        Number(datos.precisio) || 0,
+                        Number(datos.consistencia / 3) * 100 || 0,
+                        (Number(1 - (datos.velocidad_prom / 20)) * 100 || 0),
+                        (Number(datos.resistencia / 20) * 100 || 0) / 2,
+                        (Number(datos.progreso / 5) * 100 || 0)
+                    ],
+                    backgroundColor: 'rgba(54,162,235,0.2)',
+                    borderColor: 'rgb(54,162,235)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgb(54,162,235)'
+                }]
+            },
+            options:{
+                responsive:true,
+                plugins:{
+                    title:{
+                        display:true,
+                        text:"Perfil de Habilidad del Jugador"
+                    }
+                },
+                scales:{
+                    r:{
+                        beginAtZero:true
+                    }
+                }
+            }
         }
-    })
+    );
 }
 
 
 // 4. WinRate Jugador 
-export function crearGraficaWinRate(dataWinRate){
-    const elemento = document.getElementById('graficaWinRate');
+// export function crearGraficaWinRate(dataWinRate){
+//     const elemento = document.getElementById('graficaWinRate');
 
-    const winRate = parseFloat(dataWinRate[0].PorcentajeWinRate);
-    const loseRate = 100 - winRate;
+//     const winRate = parseFloat(dataWinRate[0].PorcentajeWinRate);
+//     const loseRate = 100 - winRate;
+
+//     if(graficaWinRate){
+//         graficaWinRate.destroy();
+//     }
+
+//     graficaWinRate = new Chart(elemento.getContext('2d'), {
+//         type: 'doughnut',
+//         data: {
+//             labels: ['Victorias', 'Derrotas'],
+//             datasets: [{
+//                 data: [winRate, loseRate],
+//                 backgroundColor: [
+//                     'rgb(54, 162, 235)',
+//                     'rgb(255, 99, 132)'
+//                 ],
+//                 borderColor: ['#fff', '#fff'],
+//                 borderWidth: 2
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             plugins: {
+//                 title: {
+//                     display: true,
+//                     text: `Tasa de Éxito ${dataWinRate[0].id_mundo}`
+//                 },
+//                 tooltip: {
+//                     callbacks: {
+//                         label: (context) => ` ${context.label}: ${context.raw.toFixed(1)}%`
+//                     }
+//                 }
+//             }
+//         }
+//     });
+// }
+
+export function crearGraficaWinRateJugador(dataWinRate){
+
+    if(!dataWinRate || dataWinRate.length === 0){
+        console.warn("No hay datos de WinRate");
+        return;
+    }
+
+    const elemento = document.getElementById('graficaWinRateJugador');
+
+    const labels = dataWinRate.map(item => `Mundo ${item.id_mundo}`);
+    const valores = dataWinRate.map(item => Number(item.WinRate));
 
     if(graficaWinRate){
         graficaWinRate.destroy();
@@ -535,14 +640,19 @@ export function crearGraficaWinRate(dataWinRate){
     graficaWinRate = new Chart(elemento.getContext('2d'), {
         type: 'doughnut',
         data: {
-            labels: ['Victorias', 'Derrotas'],
+            labels: labels,
             datasets: [{
-                data: [winRate, loseRate],
+                label: "WinRate",
+                data: valores,
                 backgroundColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 99, 132)'
+                    'rgb(54,162,235)',
+                    'rgb(255,99,132)',
+                    'rgb(255,206,86)',
+                    'rgb(75,192,192)',
+                    'rgb(168, 255, 102)',
+                    'rgb(153,102,255)'
                 ],
-                borderColor: ['#fff', '#fff'],
+                borderColor: '#fff',
                 borderWidth: 2
             }]
         },
@@ -551,11 +661,11 @@ export function crearGraficaWinRate(dataWinRate){
             plugins: {
                 title: {
                     display: true,
-                    text: `Tasa de Éxito ${dataWinRate[0].id_mundo}`
+                    text: 'Win Rate del Jugador por Mundo'
                 },
                 tooltip: {
                     callbacks: {
-                        label: (context) => ` ${context.label}: ${context.raw.toFixed(1)}%`
+                        label: (context) => `${context.label}: ${context.raw.toFixed(1)}%`
                     }
                 }
             }

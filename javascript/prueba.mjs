@@ -11,7 +11,7 @@ import {
     crearGraficaDuracionVSPrecision,
     crearGraficaHabilidadJugador,
     crearGraficaVictoriasPorMundo,
-    crearGraficaWinRate
+    crearGraficaWinRateJugador
 } from "./graficas.mjs";
 
 
@@ -200,6 +200,6 @@ export async function winRateJugador(userName, userApellido){
     );
     const dataWinRate = await response.json();
 
-    crearGraficaWinRate(dataWinRate);
+    crearGraficaWinRateJugador(dataWinRate);
 }
 
