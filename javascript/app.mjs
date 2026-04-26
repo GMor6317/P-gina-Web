@@ -551,6 +551,38 @@ app.get('/dashboard/ranking', async (req, res) => {
   }
 });
 
+//--------------------- Registro De Administrador -------------------------
+app.get('/validar', async (req, res) => {
+  const { username, password } = req.query;
+  let connection;
+
+  try {
+    connection = await db.connect();
+    const admin = await db.validarAdmin(connection, username, password);
+
+    if (admin) {
+      res.json({
+        exito: true,
+        usuario: admin.nombre_usuario
+      });
+    } else {
+      res.status(401).json({
+        exito: false,
+        mensaje: 'Credenciales no encontradas'
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      exito: false,
+      error: err.message
+    });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+
+
 app.use((req, res) => {
   res.status(404).json({ aviso: "Not Found" });
 });

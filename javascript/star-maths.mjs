@@ -285,7 +285,7 @@ async function puntuacionPromedioNivel(connection, mundoId, nivelId){
         SELECT m.id_mundo, n.num_nivel, AVG(puntaje) AS PromedioPuntaje
         FROM Partida p
         JOIN Nivel n ON p.id_nivel = n.id_nivel
-        JOIN Mundo m ON n.id_mundo = m.id_mundo
+        JOIN Mundo m ON n.id_mundo = n.id_mundo
         WHERE m.id_mundo = ?
         AND p.id_nivel = ?
     `, [mundoId, nivelId]);
@@ -420,6 +420,14 @@ export async function rankingAdministrador(connection) {
       puntaje: Number(r.puntaje_total)
     }))
   };
+}
+
+export async function validarAdmin(connection, username, password) {
+  const [rows] = await connection.execute(
+    'SELECT nombre_usuario FROM Administrador WHERE nombre_usuario = ? AND contrasenia = ?',
+    [username, password]
+  );
+  return rows.length > 0 ? rows[0] : null;
 }
 
 export default {
