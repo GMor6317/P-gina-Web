@@ -1,29 +1,33 @@
+import API_URL from "./api_url.mjs";
+
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
 
     loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
 
-        const user = document.getElementById('username').value;
-        const pass = document.getElementById('password').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-        // Construimos la URL con los parámetros de búsqueda
-        const url = `/validar?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`;
+        // encodeURIComponent limpia caracteres raros para la URL
+        const query = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
         try {
-            // Fetch por defecto es GET
-            const response = await fetch(url);
-            const result = await response.json();
+            const res = await fetch(`${API_URL}/validar?${query}`, {
+                method: 'GET'
+            });
+
+            const result = await res.json();
 
             if (result.exito) {
-                alert(`Acceso correcto para: ${result.usuario}`);
-                window.location.href = 'index.html'; // O tu dashboard de StarMaths
+                alert("¡Acceso concedido!");
+                window.location.href = "estadisticasParticulares.html";
             } else {
-                alert('Usuario o contraseña no coinciden con nuestros registros.');
+                alert("Usuario o contraseña incorrectos");
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Error al intentar obtener las credenciales.');
+            console.error("Error al validar:", error);
+            alert("Error de conexión");
         }
     });
 });
