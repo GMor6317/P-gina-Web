@@ -13,15 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const query = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
         try {
-            const res = await fetch(`${API_URL}/validar`, {
-                method: 'POST', // Esto fuerza a AWS a no usar caché
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+            const res = await fetch(`${API_URL}/validar?${query}`, {
+                method: 'GET'
             });
 
             const result = await res.json();
 
-            if (res.ok && result.exito) {
+            if (result.exito) {
                 alert("¡Acceso concedido!");
                 window.location.href = "estadisticasParticulares.html";
             } else {
