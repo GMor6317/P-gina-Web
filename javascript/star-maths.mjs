@@ -397,6 +397,7 @@ async function winRateJugador(connection, userName, userApellido){
     return rows;
 }
 
+
 export async function rankingAdministrador(connection) {
   const [rows] = await connection.execute(`
     SELECT 
