@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (result.exito) {
                 alert("¡Acceso concedido!");
-                window.location.href = "estadisticasParticulares.html";
+                window.location.href = "estadisticasGenerales.html";
             } else {
                 alert("Usuario o contraseña incorrectos");
             }

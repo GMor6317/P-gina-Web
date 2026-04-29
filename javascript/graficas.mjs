@@ -520,16 +520,79 @@ export function crearGraficaDuracionVSPrecision(dataPrecisionVSDuracion){
 //     })
 // }
 
-export function crearGraficaHabilidadJugador(dataHabilidadJugador){
+// export function crearGraficaHabilidadJugador(dataHabilidadJugador){
 
-    if(!dataHabilidadJugador || dataHabilidadJugador.length === 0){
+//     if(!dataHabilidadJugador || dataHabilidadJugador.length === 0){
+//         console.warn("No hay datos del jugador");
+//         return;
+//     }
+
+//     const datos = dataHabilidadJugador[0];
+
+//     if(graficaHabilidadJugador){
+//         graficaHabilidadJugador.destroy();
+//     }
+
+//     graficaHabilidadJugador = new Chart(
+//         document.getElementById('graficaHabilidadJugador').getContext('2d'),
+//         {
+//             type: 'radar',
+//             data:{
+//                 labels:[
+//                     'Precisión',
+//                     'Consistencia',
+//                     'Velocidad',
+//                     'Resistencia',
+//                     'Progreso'
+//                 ],
+//                 datasets:[{
+//                     label: 'Perfil del jugador',
+//                     data:[
+//                         Number(datos.precisio) || 0,
+//                         Number(datos.consistencia / 3) * 100 || 0,
+//                         (Number(1 - (datos.velocidad_prom / 20)) * 100 || 0),
+//                         (Number(datos.resistencia / 20) * 100 || 0) / 2,
+//                         (Number(datos.progreso / 5) * 100 || 0)
+//                     ],
+//                     backgroundColor: 'rgba(54,162,235,0.2)',
+//                     borderColor: 'rgb(54,162,235)',
+//                     borderWidth: 2,
+//                     pointBackgroundColor: 'rgb(54,162,235)'
+//                 }]
+//             },
+//             options:{
+//                 responsive:true,
+//                 plugins:{
+//                     title:{
+//                         display:true,
+//                         text:"Perfil de Habilidad del Jugador"
+//                     }
+//                 },
+//                 scales:{
+//                     r:{
+//                         beginAtZero:true
+//                     }
+//                 }
+//             }
+//         }
+//     );
+// }
+
+export function crearGraficaHabilidadJugador(dataHabilidadJugador) {
+    if (!dataHabilidadJugador || dataHabilidadJugador.length === 0) {
         console.warn("No hay datos del jugador");
         return;
     }
 
     const datos = dataHabilidadJugador[0];
 
-    if(graficaHabilidadJugador){
+    // Constantes de normalización basadas en las reglas de tu juego
+    const MAX_NIVELES = 5;
+    const MAX_ESTRELLAS_TOTAL = MAX_NIVELES * 3; // 12 estrellas máximo
+    const TIEMPO_OBJETIVO_VELOCIDAD = 10; // Segundos ideales por nivel
+    const TIEMPO_LIMITE_RESISTENCIA = 60; // Tiempo máximo esperado por nivel
+
+    if (graficaHabilidadJugador) {
         graficaHabilidadJugador.destroy();
     }
 
@@ -537,40 +600,49 @@ export function crearGraficaHabilidadJugador(dataHabilidadJugador){
         document.getElementById('graficaHabilidadJugador').getContext('2d'),
         {
             type: 'radar',
-            data:{
-                labels:[
-                    'Precisión',
-                    'Consistencia',
-                    'Velocidad',
-                    'Resistencia',
-                    'Progreso'
-                ],
-                datasets:[{
+            data: {
+                labels: ['Precisión', 'Consistencia', 'Velocidad', 'Eficiencia (Res)', 'Progreso'],
+                datasets: [{
                     label: 'Perfil del jugador',
-                    data:[
+                    data: [
+                        // 1. Precisión: Directo de BD (0-100)
                         Number(datos.precisio) || 0,
-                        Number(datos.consistencia / 3) * 100 || 0,
-                        (Number(1 - (datos.velocidad_prom / 20)) * 100 || 0),
-                        (Number(datos.resistencia / 20) * 100 || 0) / 2,
-                        (Number(datos.progreso / 5) * 100 || 0)
+
+                        // 2. Consistencia: (Estrellas obtenidas / 12) * 100
+                        (Number(datos.consistencia) / MAX_ESTRELLAS_TOTAL) * 100 || 0,
+
+                        // 3. Velocidad: Inversa. A menor tiempo, más cerca de 100.
+                        // Usamos Math.max para evitar valores negativos si superan el tiempo objetivo.
+                        Math.max(0, 100 - (Number(datos.velocidad_prom) * 2)) || 0,
+
+                        // 4. Resistencia (Tiempo mínimo): 
+                        // Interpretado como eficiencia: qué tan rápido termina comparado con un límite.
+                        Math.max(0, (1 - (Number(datos.resistencia) / TIEMPO_LIMITE_RESISTENCIA)) * 100) || 0,
+
+                        // 5. Progreso: (Nivel actual / 4) * 100
+                        (Number(datos.progreso) / MAX_NIVELES) * 100 || 0
                     ],
-                    backgroundColor: 'rgba(54,162,235,0.2)',
-                    borderColor: 'rgb(54,162,235)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgb(54, 162, 235)',
                     borderWidth: 2,
-                    pointBackgroundColor: 'rgb(54,162,235)'
+                    pointBackgroundColor: 'rgb(54, 162, 235)'
                 }]
             },
-            options:{
-                responsive:true,
-                plugins:{
-                    title:{
-                        display:true,
-                        text:"Perfil de Habilidad del Jugador"
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Análisis de Rendimiento StarMaths"
                     }
                 },
-                scales:{
-                    r:{
-                        beginAtZero:true
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100, // Forzamos escala 0-100 para consistencia visual
+                        ticks: {
+                            stepSize: 20
+                        }
                     }
                 }
             }
