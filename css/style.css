@@ -126,7 +126,11 @@ header {
     color: white;
     background-color: rgb(73, 35, 73);
     border: none;
-    padding: 60px 200px;
+    padding: 6% 8%;
+    width: 90%;
+    max-width: 300px;
+    /* height: 10%; */
+    /* max-height: 200px; */
     text-align: center;
     text-decoration: none;
     font-family: "Press Start 2P", cursive;
@@ -144,15 +148,17 @@ header {
 .validar-credenciales {
     font-family: "Arial", sans-serif;
     background-color: rgb(96, 40, 96);
-    width: 500px;
+    width: 90%;
+    max-width: 500px;
     padding: 20px;
     border-radius: 10px;
     color: white;
     text-align: center;
-     border: 4px solid #00d4ff;
+    border: 4px solid #00d4ff;
     box-shadow: 0 0 15px #00d4ff, 
                 0 0 30px #00d4ff, 
                 inset 0 0 15px #00d4ff;
+    box-sizing: border-box;
 }
 
 .contenedoresLabel { width: 150px; }
@@ -170,6 +176,8 @@ header {
     background: rgba(40, 20, 50, 0.8); 
     border: 2px solid #00d4ff; 
     box-shadow: 0 0 10px #00d4ff;
+    width: 90%;
+    max-width: 500px;
 }
 
 /* Estilo para los selectores */
@@ -188,6 +196,7 @@ header {
     -webkit-appearance: none;
     position: relative;
     text-align: center;
+    /* max-width: 60%; */
 }
 
 
@@ -203,6 +212,7 @@ header {
     color: white;
     font-family: 'Arial', sans-serif; 
     padding: 10px;
+    max-width: 60%;
 }
 
 .Graficas {
@@ -233,7 +243,8 @@ header {
     padding: 10px;
     border-radius: 5px;
     border: none;
-    width: 400px;
+    width: 50%;
+    max-width: 400px;
     font-size: 1rem;
 }
 .buscador input:focus {
@@ -292,7 +303,7 @@ canvas {
     margin: 150px 40px 40px 40px;
     width: 80%;
     border-radius: 15px;
-     border: 4px solid #00d4ff;
+    border: 4px solid #00d4ff;
     box-shadow: 0 0 15px #00d4ff, 
                 0 0 30px #00d4ff, 
                 inset 0 0 15px #00d4ff;
@@ -301,7 +312,8 @@ canvas {
 #contenedor-ranking h1 {
     color: white;
     font-family: 'Press Start 2P', cursive;
-    font-size: 50px;
+    font-size: 40px;
+    text-align: center;
 }
 
 .ranking-list {
